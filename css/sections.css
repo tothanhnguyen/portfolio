@@ -1,0 +1,180 @@
+/* ============ shared section ============ */
+.section {
+  padding: clamp(4.5rem, 11vw, 9rem) clamp(1.2rem, 6vw, 6rem);
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.kicker {
+  font-size: clamp(.8rem, 1vw, .95rem);
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+}
+h2 {
+  font-size: clamp(2.2rem, 5.5vw, 4.6rem);
+  font-weight: 600;
+  line-height: 1.08;
+}
+h2 .thin { font-weight: 400; font-style: italic; color: var(--ink-soft); }
+
+/* ============ about ============ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+.about-grid p {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+.about-grid strong { color: var(--ink); }
+
+/* ============ projects ============ */
+.project {
+  border-top: 1px solid var(--ink);
+  padding: clamp(1.6rem, 3vw, 2.6rem) .2rem;
+}
+.project:last-child { border-bottom: 1px solid var(--ink); }
+.project-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.project-head .num { font-size: .85rem; letter-spacing: .2em; color: var(--ink-soft); }
+.project-head h3 {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+.project-head h3 a { text-decoration: none; transition: color .3s; }
+.project-head h3 a:hover { color: var(--red); }
+.project-head .arrow {
+  font-size: .5em;
+  vertical-align: .6em;
+  transition: translate .3s cubic-bezier(.22,1,.36,1);
+  display: inline-block;
+}
+.project-head h3 a:hover .arrow { translate: .2em -.2em; }
+.project-meta {
+  margin-left: auto;
+  font-size: clamp(.8rem, 1vw, .95rem);
+  letter-spacing: .12em;
+  color: var(--ink-soft);
+}
+.project-desc {
+  max-width: 62ch;
+  margin-top: 1rem;
+  font-size: clamp(.95rem, 1.25vw, 1.15rem);
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+.project-stack {
+  margin-top: 1rem;
+  font-size: clamp(.85rem, 1vw, 1rem);
+  letter-spacing: .1em;
+  font-style: italic;
+}
+
+/* ============ focus & stack ============ */
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+/* hover lift uses `translate`, JS tilt uses `transform` — they compose */
+.focus-card {
+  border: 1px solid var(--ink);
+  padding: 2rem 1.6rem 2.4rem;
+  background: var(--bg);
+  transition: translate .45s cubic-bezier(.22,1,.36,1), box-shadow .45s, transform .3s ease-out;
+}
+.focus-card:hover {
+  translate: 0 -8px;
+  box-shadow: 10px 10px 0 var(--ink);
+}
+.focus-card .num {
+  font-size: .85rem;
+  letter-spacing: .2em;
+  color: var(--ink-soft);
+}
+.focus-card h3 {
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  margin: .9rem 0 .8rem;
+  font-weight: 600;
+}
+.focus-card p { font-size: .98rem; line-height: 1.7; color: var(--ink-soft); }
+
+.stack-list {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--ink);
+}
+.stack-list li {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400;
+  padding: 1.1rem .4rem;
+  border-bottom: 1px solid var(--ink);
+  transition: padding-left .4s cubic-bezier(.22,1,.36,1), font-style .2s;
+}
+.stack-list li:hover { padding-left: 2.5rem; font-style: italic; }
+.stack-list small {
+  font-size: clamp(.8rem, 1.1vw, 1rem);
+  color: var(--ink-soft);
+  margin-left: 1rem;
+  letter-spacing: .08em;
+  font-style: normal;
+}
+
+.resume-link { color: var(--red); }
+
+/* ============ contact ============ */
+.contact-section { text-align: center; }
+.talk {
+  font-size: clamp(3.5rem, 12vw, 10rem);
+  line-height: 1;
+}
+.talk .script-inline {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: .9em;
+  margin-left: .18em;
+  color: var(--red);
+}
+.contact-links {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+  align-items: center;
+}
+.contact-links a {
+  font-size: clamp(1.05rem, 2vw, 1.6rem);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, color .3s;
+}
+.contact-links a:hover { border-color: var(--red); color: var(--red); }
+
+/* magnetic links (class added by JS on fine pointers) */
+.magnetic { display: inline-block; transition: translate .25s ease-out; }
+
+/* ============ footer ============ */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.4rem clamp(1.2rem, 4vw, 3.5rem);
+  border-top: 1px solid var(--ink);
+  font-size: .85rem;
+  letter-spacing: .08em;
+}
+.footer a { text-decoration: none; }
+.footer a:hover { font-style: italic; }
+
+/* ============ responsive ============ */
+@media (max-width: 860px) {
+  .focus-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+}

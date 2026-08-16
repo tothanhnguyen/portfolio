@@ -79,6 +79,8 @@
     }
     function kick() { if (rafId === null) rafId = requestAnimationFrame(tick); }
 
+    /* both effects are desktop-only: on touch screens the drifting layers
+       collide with in-flow content below (wordmark vs. meta list) */
     if (finePointer) {
       hero.addEventListener("mousemove", function (e) {
         var r = hero.getBoundingClientRect();
@@ -86,19 +88,19 @@
         my = (e.clientY - r.top) / r.height - 0.5;
         kick();
       });
-    }
 
-    var scrollQueued = false;
-    window.addEventListener("scroll", function () {
-      if (scrollQueued) return;
-      scrollQueued = true;
-      requestAnimationFrame(function () {
-        scrollQueued = false;
-        heroH = hero.offsetHeight || 1;
-        drift = Math.min(window.scrollY || 0, heroH) * 0.35;
-        apply();
-      });
-    }, { passive: true });
+      var scrollQueued = false;
+      window.addEventListener("scroll", function () {
+        if (scrollQueued) return;
+        scrollQueued = true;
+        requestAnimationFrame(function () {
+          scrollQueued = false;
+          heroH = hero.offsetHeight || 1;
+          drift = Math.min(window.scrollY || 0, heroH) * 0.35;
+          apply();
+        });
+      }, { passive: true });
+    }
   }
 
   /* ---- footer year ---- */

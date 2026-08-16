@@ -177,4 +177,9 @@ h2 .thin { font-weight: 400; font-style: italic; color: var(--ink-soft); }
 @media (max-width: 860px) {
   .focus-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: 1fr; }
+  /* stack detail tags drop below the big word instead of wrapping mid-line */
+  .stack-list small { display: block; margin: .35rem 0 0; }
+  .project-head { gap: .6rem 1rem; }
+  .project-meta { margin-left: 0; flex-basis: 100%; }
+  .footer { flex-wrap: wrap; gap: .5rem; }
 }

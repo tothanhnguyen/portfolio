@@ -82,6 +82,7 @@
   bottom: -5vh;
   transform: translateX(-50%);
   height: min(100vh, 100vw, 1150px);
+  height: min(100svh, 100vw, 1150px); /* svh: stable under iOS URL-bar resize */
   width: auto;
   max-width: none;
   z-index: 3;
@@ -195,7 +196,9 @@
     left: auto; right: -8%;
     bottom: clamp(230px, 34vh, 320px); /* sit above the meta/contact block */
     height: min(56vh, 130vw, 500px);
+    height: min(56svh, 130vw, 500px);
     transform: none; animation-name: fade-in;
+    filter: drop-shadow(0 14px 26px rgba(0,0,0,.2)); /* lighter shadow = cheaper repaints */
   }
   .wordmark { margin-inline: 0; }
   .script-word { right: 4%; top: 56%; font-size: 14vw; }

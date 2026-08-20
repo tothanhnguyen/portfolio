@@ -205,7 +205,7 @@
   .wordmark {
     position: absolute;
     inset-inline: 0;
-    top: 60%;
+    top: 56%;
     margin-inline: auto;
     font-size: clamp(3rem, 15vw, 7.2rem);
     text-align: left;
@@ -224,7 +224,7 @@
     transform: none; animation-name: fade-in;
     filter: drop-shadow(0 14px 26px rgba(0,0,0,.2)); /* lighter shadow = cheaper repaints */
   }
-  .script-word { right: 4%; top: 78%; font-size: 14vw; }
+  .script-word { right: 4%; top: 74%; font-size: 14vw; }
   .hero-bottom { grid-column: 1; grid-row: 3; flex-direction: column; align-items: flex-start; gap: 1rem; }
   .contact { text-align: left; }
   .scroll-hint { display: none; }

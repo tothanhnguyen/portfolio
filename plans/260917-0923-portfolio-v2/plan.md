@@ -12,6 +12,8 @@ blocks: []
 
 # Portfolio V2 — Editorial / Self–Fragment
 
+> **Quyết định mới của user — thay thế hướng experimental cũ:** Home bỏ architecture overview và dùng project layout đơn giản; About bỏ hoàn toàn SELF / FRAGMENT, scroll-scrub và content motion. Kế hoạch hiện hành: [visual-revision-plan.md](visual-revision-plan.md) — **Simple Home / Static About**, trạng thái pending. Các yêu cầu fragment/experimental và kiểm thử tương ứng bên dưới chỉ là lịch sử V2, không được triển khai lại. Architecture trong project detail vẫn giữ.
+
 ## 1. Phạm vi và quyết định
 
 Đây là **plan triển khai**, chưa thay đổi HTML/CSS/JS. Giữ HTML + CSS + JavaScript thuần, không framework, build pipeline, GSAP, WebGL hoặc video. Website tiếp tục hoạt động bằng static hosting.

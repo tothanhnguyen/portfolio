@@ -19,13 +19,16 @@
   z-index: 6;
 }
 
-.hero-nav { animation: fade-down 1s .5s both; }
-/* the portrait rises behind the top bar: halo the links like the jp line,
-   so they read over the dark hair/jacket without a background box */
-.hero-nav a {
-  text-shadow: 1px 1px 0 var(--bg), -1px -1px 0 var(--bg),
-               1px -1px 0 var(--bg), -1px 1px 0 var(--bg), 0 0 6px var(--bg);
+/* right column: signature on top, nav below it — clear of the portrait */
+.hero-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .7rem;
 }
+.hero-aside .hero-nav { margin-top: .3rem; }
+/* nav lives under the signature in the free right area, away from the
+   portrait's head — no halos or shadows to fix misplacement */
 
 .uit-block { display: flex; gap: .8rem; align-items: center; animation: fade-down 1s .2s both; }
 .uit-orbit { width: clamp(44px, 4.5vw, 62px); height: auto; transition: transform .35s cubic-bezier(.22,1,.36,1); }

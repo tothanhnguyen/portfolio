@@ -37,15 +37,16 @@
         </div>
       </div>
 
-      <nav class="site-nav hero-nav" aria-label="Primary">
-        <a href="#projects">Work</a>
-        <a href="/about/">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <div class="sig-block" data-depth="0.4" data-scroll="0.2">
-        <span class="sig">Thành Nguyên</span>
-        <span class="dob">01 · 01 · 2006</span>
+      <div class="hero-aside">
+        <div class="sig-block" data-depth="0.4" data-scroll="0.2">
+          <span class="sig">Thành Nguyên</span>
+          <span class="dob">01 · 01 · 2006</span>
+        </div>
+        <nav class="site-nav hero-nav" aria-label="Primary">
+          <a href="#projects">Work</a>
+          <a href="/about/">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </div>
     </div>
 
@@ -88,56 +89,44 @@
 
   <main id="main">
 
-    <!-- ============ SELECTED WORK — editorial chapters ============ -->
+    <!-- ============ SELECTED WORK ============ -->
     <section class="work section" id="projects">
-      <p class="kicker" data-reveal>( selected work )</p>
-      <h2 class="section-title" data-reveal>Selected Work <span class="sec-num">/ two builds</span></h2>
+      <h2 class="section-title" data-reveal>Selected Work</h2>
 
-      <div class="chapters">
-        <!-- chapter 01: text left, visual right -->
-        <article class="chapter">
-          <div class="chapter-text" data-reveal>
-            <p class="chapter-num">01 / 2026</p>
-            <h3 class="chapter-title"><a href="/projects/mowstudio/">MowStudio</a></h3>
-            <p class="chapter-premise">Booking infrastructure for creative studios.</p>
-            <p class="chapter-stack">Next.js · TypeScript · PostgreSQL</p>
-            <a class="chapter-cta" href="/projects/mowstudio/">View project <span aria-hidden="true">→</span></a>
+      <div class="work-list">
+        <article class="project-row" data-reveal>
+          <div class="project-id">
+            <span class="project-num">01</span>
+            <h3 class="project-name"><a href="/projects/mowstudio/">MowStudio</a></h3>
+            <p class="project-meta">Personal project · 2026</p>
           </div>
-          <figure class="chapter-visual" data-reveal>
-            <a href="/projects/mowstudio/" aria-label="View the MowStudio case study">
-              <img src="/assets/projects/mowstudio-architecture.svg" width="1600" height="1080" loading="lazy"
-                   alt="MowStudio architecture overview: browser through Vercel into a Next.js modular monolith, backed by PostgreSQL, Supabase Auth, SePay, Resend and Sentry">
-            </a>
-            <figcaption>Architecture overview — modular monolith on Vercel. Source: project docs.</figcaption>
-          </figure>
+          <div class="project-info">
+            <p class="project-premise">Booking infrastructure for creative studios.</p>
+            <p class="project-stack">Next.js · TypeScript · PostgreSQL</p>
+            <a class="project-cta" href="/projects/mowstudio/">View project <span aria-hidden="true">→</span></a>
+          </div>
         </article>
 
-        <!-- chapter 02: visual left, text right (desktop grid swap, DOM order kept) -->
-        <article class="chapter chapter--flip">
-          <div class="chapter-text" data-reveal>
-            <p class="chapter-num">02 / 2026</p>
-            <h3 class="chapter-title"><a href="/projects/chat-server/">Chat Server Microservices</a></h3>
-            <p class="chapter-premise">Real-time messaging as a distributed system — twelve services, one shared contract layer.</p>
-            <p class="chapter-team">4-member academic team. My part: the shared gRPC contracts
-              and the file service with MinIO storage.</p>
-            <p class="chapter-stack">Java · Spring Boot · gRPC · RabbitMQ</p>
-            <a class="chapter-cta" href="/projects/chat-server/">View project <span aria-hidden="true">→</span></a>
+        <article class="project-row" data-reveal>
+          <div class="project-id">
+            <span class="project-num">02</span>
+            <h3 class="project-name"><a href="/projects/chat-server/">Chat Server Microservices</a></h3>
+            <p class="project-meta">Team project · 2026</p>
           </div>
-          <figure class="chapter-visual" data-reveal>
-            <a href="/projects/chat-server/" aria-label="View the Chat Server case study">
-              <img src="/assets/projects/chat-architecture.svg" width="1600" height="1000" loading="lazy"
-                   alt="Chat Server architecture overview: desktop client through a dual-mode JWT gateway, twelve microservices over gRPC, RabbitMQ events, MySQL per service, MinIO and Keycloak">
-            </a>
-            <figcaption>Architecture overview — edited from the project README.</figcaption>
-          </figure>
+          <div class="project-info">
+            <p class="project-premise">Real-time messaging across distributed services.</p>
+            <p class="project-team">4-member team — I built the shared gRPC contracts and the file service.</p>
+            <p class="project-stack">Java · Spring Boot · gRPC · RabbitMQ</p>
+            <a class="project-cta" href="/projects/chat-server/">View project <span aria-hidden="true">→</span></a>
+          </div>
         </article>
       </div>
     </section>
 
-    <!-- ============ CAPABILITIES / 03 ============ -->
+    <!-- ============ CAPABILITIES ============ -->
     <section class="capabilities section" id="focus">
       <p class="kicker" data-reveal>( capabilities )</p>
-      <h2 class="section-title" data-reveal>Capabilities <span class="sec-num">/ 03</span></h2>
+      <h2 class="section-sub" data-reveal>Capabilities</h2>
       <ol class="cap-list">
         <li class="cap-row" data-reveal>
           <span class="cap-num">01</span>
@@ -152,15 +141,15 @@
         <li class="cap-row" data-reveal>
           <span class="cap-num">03</span>
           <h3 class="cap-name"><a href="/about/">AI-Assisted Engineering</a></h3>
-          <p class="cap-desc">Agent orchestration with Claude Code and Codex — multi-agent pipelines that plan, build, test, and document, with human review at every gate.</p>
+          <p class="cap-desc">Agent orchestration with Claude Code and Codex — pipelines that plan, build, test, and document, with human review at every gate.</p>
         </li>
       </ol>
     </section>
 
-    <!-- ============ STACK / 04 ============ -->
+    <!-- ============ STACK ============ -->
     <section class="stack-section section" id="stack">
       <p class="kicker" data-reveal>( stack )</p>
-      <h2 class="section-title" data-reveal>Stack <span class="sec-num">/ 04</span></h2>
+      <h2 class="section-sub" data-reveal>Stack</h2>
       <ul class="stack-list">
         <li data-reveal>
           <span class="stack-name">Java</span>
@@ -185,25 +174,12 @@
       </ul>
     </section>
 
-    <!-- ============ ABOUT TEASER — full-width editorial break ============ -->
-    <section class="teaser" id="about">
-      <div class="teaser-grid">
-        <div class="teaser-text" data-reveal>
-          <p class="kicker">( profile )</p>
-          <h2 class="teaser-line">
-            Software Engineer<br>
-            <span class="teaser-sub">exploring systems that</span><br>
-            Think <span class="teaser-slash">/</span> See <span class="teaser-slash">/</span> Act
-          </h2>
-          <a class="teaser-cta" href="/about/">Enter profile <span aria-hidden="true">→</span></a>
-        </div>
-        <figure class="teaser-fig" aria-hidden="true">
-          <picture>
-            <source srcset="/assets/pose-cutout.webp" type="image/webp">
-            <img src="/assets/pose-cutout.png" alt="" loading="lazy">
-          </picture>
-        </figure>
-      </div>
+    <!-- ============ ABOUT TEASER — short intro ============ -->
+    <section class="teaser section" id="about">
+      <p class="kicker" data-reveal>( about )</p>
+      <h2 class="teaser-intro" data-reveal>Software engineering student at UIT,
+        building web systems and exploring AI-assisted development.</h2>
+      <a class="teaser-cta" data-reveal href="/about/">More about me <span aria-hidden="true">→</span></a>
     </section>
 
     <!-- ============ CONTACT ============ -->

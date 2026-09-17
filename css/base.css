@@ -137,7 +137,7 @@ ul, ol { list-style: none; }
 
 /* ============ shared type ============ */
 .section {
-  padding: clamp(4.5rem, 11vw, 9rem) var(--gutter);
+  padding: clamp(3.5rem, 8vw, 6.5rem) var(--gutter);
   max-width: 1300px;
   margin: 0 auto;
 }
@@ -154,19 +154,17 @@ h2 {
   line-height: 1.08;
 }
 .section-title {
-  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
   font-weight: 600;
   letter-spacing: .02em;
   line-height: 1;
-  display: flex;
-  align-items: baseline;
-  gap: 1.2rem;
 }
-.section-title .sec-num {
-  font-size: clamp(.85rem, 1.1vw, 1rem);
-  letter-spacing: .25em;
-  color: var(--ink-soft);
-  font-weight: 400;
+/* smaller, quieter heading for adjacent sections (Capabilities / Stack) */
+.section-sub {
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: .03em;
+  line-height: 1.2;
 }
 .lede {
   max-width: var(--measure);

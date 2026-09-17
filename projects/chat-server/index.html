@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d8d7d4">
+  <title>Chat Server Microservices — Case Study · T'NGUYEN</title>
+  <meta name="description" content="Chat Server Microservices — a Discord-inspired real-time messaging platform: 12 services, gRPC contracts, RabbitMQ events, database-per-service MySQL.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Chat Server Microservices — Case Study">
+  <meta property="og:description" content="Real-time messaging as a distributed system — shared contracts, file service, event-driven audit logging.">
+  <meta property="og:image" content="/assets/pose-cutout.png">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/project.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="page-head">
+    <a class="brand" href="/">T<em>’</em>NGUYEN</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/#projects" aria-current="true">Work</a>
+      <a href="/about/">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article class="case">
+
+      <header class="case-head section">
+        <a class="case-back" href="/#projects">← Selected work</a>
+        <p class="case-num" data-reveal>02 / 2026 — 4-member academic team</p>
+        <h1 class="case-title" data-reveal>Chat Server Microservices</h1>
+        <p class="case-premise" data-reveal>Real-time messaging as a distributed system —
+          twelve services, one shared contract layer.</p>
+        <dl class="case-meta" data-reveal>
+          <div><dt>Role</dt><dd>Shared contracts · file service · audit pipeline</dd></div>
+          <div><dt>Period</dt><dd>Jan — Jun 2026</dd></div>
+          <div><dt>Stack</dt><dd>Java 17 · Spring Boot 3 · Spring Cloud Gateway · gRPC · RabbitMQ · MySQL · MinIO · Keycloak</dd></div>
+          <div><dt>Shape</dt><dd>12 microservices · 15 Maven modules · Swing desktop client</dd></div>
+        </dl>
+      </header>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Problem</h2>
+        <p data-reveal>A Discord-inspired platform: community servers and channels, direct
+          messages and friends, presence, file sharing, and per-server RBAC — built as a
+          microservices system where each service owns its database and nothing may cross
+          a database boundary.</p>
+        <p data-reveal>The difficulty is coordination: twelve independently-owned schemas that
+          still have to behave like one product, over both synchronous calls and
+          asynchronous events, while authentication migrates underneath them.</p>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Solution &amp; architecture</h2>
+        <p data-reveal>Spring Cloud Gateway terminates the edge and authenticates in
+          <strong>dual mode</strong> — Keycloak tokens (RS256 via JWKS) first, legacy
+          HS256 tokens from auth-service as fallback — then forwards identity as
+          <code>X-User-Id</code>. Internally, services communicate over gRPC with contracts
+          in the shared <code>grpc-contracts</code> module; asynchronous events
+          (presence, notifications, logs) flow through a RabbitMQ topic exchange; WebSocket
+          chat sessions are owned by messaging-service. Each service keeps its own MySQL
+          schema.</p>
+        <ul class="case-points">
+          <li data-reveal><b>Contracts before services.</b> The shared modules — DTOs, enums,
+            exceptions, and the Protocol Buffers contracts with generated gRPC stubs — were
+            built first, so twelve services could be built in parallel against one vocabulary.</li>
+          <li data-reveal><b>File service:</b> MinIO (S3-compatible) uploads with a 10 MB cap and
+            automatic thumbnail generation for images.</li>
+          <li data-reveal><b>Audit logging is event-driven:</b> sensitive actions are published to
+            the exchange and aggregated centrally into Loki/Promtail — services stay
+            decoupled from the log store.</li>
+          <li data-reveal><b>Observability is part of the deliverable:</b> Prometheus, Grafana,
+            Spring Boot Actuator with Micrometer tracing, deployed via Kubernetes
+            (Kustomize) and Jenkins.</li>
+        </ul>
+        <figure class="case-fig" data-reveal>
+          <img src="/assets/projects/chat-architecture.svg" width="1600" height="1000" loading="lazy"
+               alt="Chat Server architecture diagram: desktop client through the dual-mode JWT gateway, twelve microservices over gRPC with MySQL per service, RabbitMQ event exchange feeding log-service and Loki">
+          <figcaption>Architecture overview — simplified from the architecture diagram in the
+            project README.</figcaption>
+        </figure>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>My contribution</h2>
+        <p data-reveal>Within the 4-member team I owned the shared foundation: the
+          <strong>common-lib</strong> (DTOs, enums, exceptions, utilities), the
+          <strong>grpc-contracts</strong> module (proto definitions and generated gRPC
+          stubs every service imports), and the <strong>file service</strong> with MinIO
+          storage and automatic thumbnails — plus the event-driven audit logging pipeline
+          over RabbitMQ and Loki.</p>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Trade-offs</h2>
+        <ul class="case-list">
+          <li data-reveal><b>Database-per-service buys isolation at the cost of joins.</b> Every
+            cross-domain read becomes a contract call — cleaner boundaries, more hops.</li>
+          <li data-reveal><b>Dual-mode JWT makes the Keycloak migration gradual,</b> but two
+            verification paths run at the gateway until the legacy issuer is retired.</li>
+          <li data-reveal><b>Swing kept the scope on the backend.</b> The desktop client is
+            functional (3-column layout, light/dark), not the showcase; the system is the story.</li>
+          <li data-reveal><b>Uploads cap at 10 MB</b> — predictable file-service behavior without
+            implementing chunked transfers.</li>
+        </ul>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Evidence</h2>
+        <p data-reveal>Graded <strong>9.5/10 Java</strong>, <strong>9.5/10 Microservices</strong>,
+          and <strong>10/10 DevOps</strong> in the course evaluation. The
+          architecture, the twelve-service list with ports and databases, and the dual-mode
+          gateway design are documented in the project README.</p>
+      </section>
+
+      <nav class="case-nav section" aria-label="Case study navigation">
+        <a href="/projects/mowstudio/">Next: MowStudio →</a>
+        <a href="https://github.com/Ncyntrq/ChatServerMicroservices" target="_blank" rel="noopener">Source ↗</a>
+      </nav>
+
+    </article>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year">2026</span> Thành Nguyên</span>
+    <a href="/#projects">Selected work ↑</a>
+  </footer>
+
+  <script src="/js/effects.js" defer></script>
+</body>
+</html>

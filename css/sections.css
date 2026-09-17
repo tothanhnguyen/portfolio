@@ -1,185 +1,201 @@
-/* ============ shared section ============ */
-.section {
-  padding: clamp(4.5rem, 11vw, 9rem) clamp(1.2rem, 6vw, 6rem);
-  max-width: 1300px;
-  margin: 0 auto;
-}
-.kicker {
-  font-size: clamp(.8rem, 1vw, .95rem);
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 2rem;
-}
-h2 {
-  font-size: clamp(2.2rem, 5.5vw, 4.6rem);
-  font-weight: 600;
-  line-height: 1.08;
-}
-h2 .thin { font-weight: 400; font-style: italic; color: var(--ink-soft); }
-
-/* ============ about ============ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  margin-top: clamp(2rem, 5vw, 4rem);
-}
-.about-grid p {
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
-  line-height: 1.8;
-  color: var(--ink-soft);
-}
-.about-grid strong { color: var(--ink); }
-
-/* ============ projects ============ */
-.project {
+/* ============ home — selected work chapters ============ */
+.chapters {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
   border-top: 1px solid var(--ink);
-  padding: clamp(1.6rem, 3vw, 2.6rem) .2rem;
 }
-.project:last-child { border-bottom: 1px solid var(--ink); }
-.project-head {
-  display: flex;
-  align-items: baseline;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-}
-.project-head .num { font-size: .85rem; letter-spacing: .2em; color: var(--ink-soft); }
-.project-head h3 {
-  font-size: clamp(1.8rem, 4vw, 3.2rem);
-  font-weight: 600;
-  line-height: 1.1;
-}
-.project-head h3 a { text-decoration: none; transition: color .3s; }
-.project-head h3 a:hover { color: var(--red); }
-.project-head .arrow {
-  font-size: .5em;
-  vertical-align: .6em;
-  transition: translate .3s cubic-bezier(.22,1,.36,1);
-  display: inline-block;
-}
-.project-head h3 a:hover .arrow { translate: .2em -.2em; }
-.project-meta {
-  margin-left: auto;
-  font-size: clamp(.8rem, 1vw, .95rem);
-  letter-spacing: .12em;
-  color: var(--ink-soft);
-}
-.project-desc {
-  max-width: 62ch;
-  margin-top: 1rem;
-  font-size: clamp(.95rem, 1.25vw, 1.15rem);
-  line-height: 1.75;
-  color: var(--ink-soft);
-}
-.project-stack {
-  margin-top: 1rem;
-  font-size: clamp(.85rem, 1vw, 1rem);
-  letter-spacing: .1em;
-  font-style: italic;
-}
-
-/* ============ focus & stack ============ */
-.focus-grid {
+.chapter {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
 }
-/* hover lift uses `translate`, JS tilt uses `transform` — they compose */
-.focus-card {
-  border: 1px solid var(--ink);
-  padding: 2rem 1.6rem 2.4rem;
-  background: var(--bg);
-  transition: translate .45s cubic-bezier(.22,1,.36,1), box-shadow .45s, transform .3s ease-out;
+.chapter + .chapter { border-top: 1px solid var(--ink); }
+
+/* desktop flips placement only; DOM (and tab order) stays text-first */
+.chapter--flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.chapter--flip .chapter-text { grid-column: 2; grid-row: 1; }
+.chapter--flip .chapter-visual { grid-column: 1; grid-row: 1; }
+
+.chapter-num { font-size: .85rem; letter-spacing: .22em; color: var(--ink-soft); }
+.chapter-title {
+  margin-top: .9rem;
+  font-size: clamp(2.2rem, 5.2vw, 4.6rem);
+  font-weight: 600;
+  line-height: 1.02;
 }
-.focus-card:hover {
-  translate: 0 -8px;
-  box-shadow: 10px 10px 0 var(--ink);
+.chapter-title a { text-decoration: none; transition: color .3s; }
+.chapter-title a:hover { color: var(--red); }
+.chapter-premise {
+  margin-top: 1.1rem;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.6;
+  max-width: 30ch;
 }
-.focus-card .num {
-  font-size: .85rem;
-  letter-spacing: .2em;
+.chapter-team {
+  margin-top: .9rem;
+  font-size: clamp(.9rem, 1.2vw, 1.05rem);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+.chapter-stack {
+  margin-top: 1rem;
+  font-style: italic;
+  letter-spacing: .08em;
+  font-size: clamp(.85rem, 1vw, 1rem);
+}
+.chapter-cta {
+  margin-top: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: .55em;
+  text-decoration: none;
+  font-size: clamp(.95rem, 1.2vw, 1.1rem);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink);
+  transition: color .3s, border-color .3s;
+}
+.chapter-cta:hover { color: var(--red); border-color: var(--red); }
+
+.chapter-visual { margin: 0; align-self: center; }
+.chapter-visual img { width: 100%; height: auto; }
+.chapter-visual figcaption {
+  margin-top: .8rem;
+  font-size: .82rem;
+  font-style: italic;
+  letter-spacing: .05em;
   color: var(--ink-soft);
 }
-.focus-card h3 {
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
-  margin: .9rem 0 .8rem;
-  font-weight: 600;
-}
-.focus-card p { font-size: .98rem; line-height: 1.7; color: var(--ink-soft); }
 
+/* ============ capabilities — editorial index rows ============ */
+.cap-list {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--ink);
+}
+.cap-row {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 5fr) minmax(0, 7fr);
+  gap: 1.2rem 3rem;
+  align-items: baseline;
+  padding: clamp(1.8rem, 3.5vw, 3rem) 0;
+  border-bottom: 1px solid var(--ink);
+}
+.cap-num { font-size: .85rem; letter-spacing: .2em; color: var(--ink-soft); }
+.cap-name {
+  font-size: clamp(1.8rem, 3.8vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  transition: translate .45s var(--ease), color .3s;
+}
+.cap-name a { text-decoration: none; }
+/* accent + a few px of movement; no layout shift, no hidden info */
+.cap-row:hover .cap-name,
+.cap-row:focus-within .cap-name { translate: 8px 0; color: var(--red); }
+.cap-desc {
+  font-size: clamp(.95rem, 1.3vw, 1.15rem);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+/* ============ stack — big index list ============ */
 .stack-list {
   margin-top: clamp(2.5rem, 6vw, 4.5rem);
   border-top: 1px solid var(--ink);
 }
 .stack-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .2rem 2rem;
+  align-items: baseline;
+  padding: clamp(1.3rem, 2.8vw, 2rem) 0;
+  border-bottom: 1px solid var(--ink);
+}
+.stack-name {
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 400;
-  padding: 1.1rem .4rem;
-  border-bottom: 1px solid var(--ink);
-  transition: padding-left .4s cubic-bezier(.22,1,.36,1), font-style .2s;
+  line-height: 1.05;
+  transition: color .35s, translate .45s var(--ease);
 }
-.stack-list li:hover { padding-left: 2.5rem; font-style: italic; }
+.stack-index { font-size: .85rem; letter-spacing: .2em; color: var(--ink-soft); }
 .stack-list small {
-  font-size: clamp(.8rem, 1.1vw, 1rem);
+  grid-column: 1 / -1;
+  font-size: clamp(.8rem, 1.05vw, 1rem);
   color: var(--ink-soft);
-  margin-left: 1rem;
   letter-spacing: .08em;
-  font-style: normal;
+  line-height: 1.6;
 }
+/* transform on the content, not padding on the layout */
+.stack-list li:hover .stack-name { color: var(--red); translate: 12px 0; }
 
-.resume-link { color: var(--red); }
+/* ============ about teaser — full-width editorial break ============ */
+.teaser { padding: clamp(5rem, 13vw, 11rem) var(--gutter); }
+.teaser-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.teaser-line {
+  font-size: clamp(2.1rem, 5.8vw, 5.2rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1.06;
+  letter-spacing: .015em;
+}
+.teaser-sub { font-weight: 400; font-style: italic; color: var(--ink-soft); }
+.teaser-slash { color: var(--red); font-weight: 400; margin: 0 .12em; }
+.teaser-cta {
+  margin-top: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: .55em;
+  text-decoration: none;
+  font-size: clamp(.95rem, 1.25vw, 1.15rem);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: .3rem;
+  transition: color .3s, border-color .3s;
+}
+.teaser-cta:hover { color: var(--red); border-color: var(--red); }
+.teaser-fig {
+  margin: 0;
+  height: min(62vh, 580px);
+  height: min(62svh, 580px);
+  aspect-ratio: 515 / 1115;
+  overflow: hidden;
+  justify-self: end;
+}
+.teaser-fig img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: drop-shadow(0 20px 34px rgba(0,0,0,.16));
+}
 
 /* ============ contact ============ */
 .contact-section { text-align: center; }
-.talk {
-  font-size: clamp(3.5rem, 12vw, 10rem);
-  line-height: 1;
-}
-.talk .script-inline {
-  font-family: var(--script);
-  font-weight: 400;
-  font-size: .9em;
-  margin-left: .18em;
-  color: var(--red);
-}
-.contact-links {
-  margin-top: clamp(2rem, 5vw, 3.5rem);
-  display: flex;
-  flex-direction: column;
-  gap: .9rem;
-  align-items: center;
-}
-.contact-links a {
-  font-size: clamp(1.05rem, 2vw, 1.6rem);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color .3s, color .3s;
-}
-.contact-links a:hover { border-color: var(--red); color: var(--red); }
-
-/* magnetic links (class added by JS on fine pointers) */
-.magnetic { display: inline-block; transition: translate .25s ease-out; }
-
-/* ============ footer ============ */
-.footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 1.4rem clamp(1.2rem, 4vw, 3.5rem);
-  border-top: 1px solid var(--ink);
-  font-size: .85rem;
-  letter-spacing: .08em;
-}
-.footer a { text-decoration: none; }
-.footer a:hover { font-style: italic; }
+.talk { font-size: clamp(3.5rem, 12vw, 10rem); line-height: 1; }
+.contact-section .contact-wrap { align-items: center; }
 
 /* ============ responsive ============ */
 @media (max-width: 860px) {
-  .focus-grid { grid-template-columns: 1fr; }
-  .about-grid { grid-template-columns: 1fr; }
-  /* stack detail tags drop below the big word instead of wrapping mid-line */
-  .stack-list small { display: block; margin: .35rem 0 0; }
-  .project-head { gap: .6rem 1rem; }
-  .project-meta { margin-left: 0; flex-basis: 100%; }
-  .footer { flex-wrap: wrap; gap: .5rem; }
+  .chapter,
+  .chapter--flip { grid-template-columns: 1fr; gap: 1.8rem; }
+  .chapter--flip .chapter-text,
+  .chapter--flip .chapter-visual { grid-column: 1; grid-row: auto; }
+  .chapter-premise { max-width: none; }
+  .cap-row { grid-template-columns: 1fr; gap: .8rem; }
+  .cap-desc { max-width: none; }
+  .teaser-grid { grid-template-columns: 1fr; }
+  .teaser-fig { justify-self: center; height: min(52vh, 460px); }
+  .teaser-fig { justify-self: center; height: min(52svh, 460px); }
 }

@@ -1,0 +1,316 @@
+/* ============ About — Editorial / Self-Fragment ============
+   Default composition is static and fully readable (no JS, reduced
+   motion, small screens). The sticky scrub scene only exists under
+   [data-motion="on"], which js/about.js sets when every gate passes. */
+
+.page-head { border-bottom: 1px solid var(--ink); }
+
+/* ============ chapter frame ============ */
+.chapter {
+  padding: clamp(4.5rem, 10vw, 8rem) var(--gutter);
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.chapter + .chapter { border-top: 1px solid var(--ink); }
+
+/* ============ 1 · identity ============ */
+.identity-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+.identity {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(3.4rem, 11.5vw, 10.5rem);
+  font-weight: 600;
+  line-height: .92;
+  letter-spacing: .01em;
+}
+.identity-script {
+  font-family: var(--script);
+  font-weight: 400;
+  color: var(--red);
+  font-size: .52em;
+  line-height: 1;
+  margin-bottom: .1em;
+}
+.identity-role {
+  margin-top: 2.2rem;
+  font-size: clamp(.78rem, 1.05vw, .95rem);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  max-width: 34ch;
+  line-height: 1.8;
+}
+.identity-portrait { margin: 0; justify-self: end; }
+.identity-portrait img {
+  height: min(70vh, 620px);
+  height: min(70svh, 620px);
+  width: auto;
+  max-width: none;
+  filter: drop-shadow(0 24px 44px rgba(0,0,0,.18));
+}
+
+/* ============ 2 · introduction ============ */
+.modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.4rem, 3vw, 3rem);
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+.modes li { border-top: 1px solid var(--ink); padding-top: 1.3rem; }
+.mode-name {
+  display: block;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  font-style: italic;
+  margin-bottom: .7rem;
+}
+.modes li p {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  font-size: clamp(.95rem, 1.25vw, 1.1rem);
+}
+.modes-note {
+  margin-top: 2.6rem;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+  line-height: 1.75;
+}
+.modes-note a { color: var(--red); }
+
+/* ============ 3 · fragments — default: static reconstruction ============ */
+.chapter--scene { padding-bottom: 0; }
+
+.scene-stage {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 2.5rem 0;
+}
+
+/* one coordinate space: every fragment crops the same 515×1115 portrait,
+   so the five pieces reconstruct the exact home-page portrait */
+.scene-frame {
+  position: relative;
+  height: min(72vh, 660px);
+  height: min(72svh, 660px);
+  aspect-ratio: 515 / 1115;
+}
+
+.frag {
+  position: absolute;
+  overflow: hidden;
+  left: calc(var(--fx) * 1%);
+  top: calc(var(--fy) * 1%);
+  width: calc(var(--fw) * 1%);
+  height: calc(var(--fh) * 1%);
+  transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(var(--tr, 0deg));
+  filter: drop-shadow(0 16px 26px rgba(0,0,0,.16));
+}
+.frag img {
+  position: absolute;
+  max-width: none;
+  width: calc(100% * 100 / var(--fw));
+  height: calc(100% * 100 / var(--fh));
+  left: calc(var(--fx) / var(--fw) * -100%);
+  top: calc(var(--fy) / var(--fh) * -100%);
+}
+.frag--1 { --fx: 0;  --fy: 0;  --fw: 100; --fh: 30; z-index: 2; } /* face — moves least */
+.frag--2 { --fx: 0;  --fy: 28; --fw: 52;  --fh: 34; z-index: 1; }
+.frag--3 { --fx: 46; --fy: 26; --fw: 54;  --fh: 36; z-index: 1; }
+.frag--4 { --fx: 0;  --fy: 58; --fw: 100; --fh: 26; }
+.frag--5 { --fx: 0;  --fy: 80; --fw: 100; --fh: 20; }
+
+/* typography fragment — real h2, moved counter to the portrait */
+.frag-word {
+  position: absolute;
+  z-index: 1;
+  top: 7%;
+  left: var(--gutter);
+  font-size: clamp(3rem, 9vw, 8.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  line-height: 1;
+  transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0);
+  opacity: var(--o, 1);
+  pointer-events: none;
+}
+
+/* practice labels — decorative here; real content lives in Practice */
+.scene-label {
+  position: absolute;
+  z-index: 3;
+  font-size: clamp(.95rem, 1.4vw, 1.4rem);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  opacity: var(--o, 1);
+  transform: translate3d(0, var(--ty, 0px), 0);
+  pointer-events: none;
+}
+.label--software { left: var(--gutter); bottom: 19%; }
+.label--frontend { right: var(--gutter); top: 22%; }
+.label--ai       { right: var(--gutter); bottom: 25%; }
+.label--vision   { left: var(--gutter); top: 27%; color: var(--red); }
+
+.scene-line {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 6.5%;
+  width: min(46ch, 84%);
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.45vw, 1.35rem);
+  line-height: 1.6;
+  opacity: var(--o, 1);
+  transform: translate(-50%, 0) translate3d(0, var(--ty, 0px), 0);
+}
+
+/* sticky scrub, desktop only, once every gate has passed */
+@media (min-width: 761px) {
+  [data-scene][data-motion="on"] .scene-runway { height: 240vh; }
+  [data-scene][data-motion="on"] .scene-runway { height: 240svh; }
+  [data-scene][data-motion="on"] .scene-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    padding: 0;
+  }
+  .scene--live .frag { will-change: transform; }
+  .scene--live .frag-word,
+  .scene--live .scene-label,
+  .scene--live .scene-line { will-change: transform, opacity; }
+}
+
+/* ============ 4–5 · practice & context rows ============ */
+.practice-list,
+.context-list {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  border-top: 1px solid var(--ink);
+}
+.practice-list .row,
+.context-list .row {
+  border-bottom: 1px solid var(--ink);
+  padding: clamp(1.6rem, 3vw, 2.4rem) 0;
+  display: grid;
+  gap: 1rem 2.5rem;
+  align-items: baseline;
+}
+.practice-list .row { grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 16rem); }
+.context-list .row { grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr); }
+
+.row-num,
+.row-when {
+  font-size: .85rem;
+  letter-spacing: .2em;
+  color: var(--ink-soft);
+}
+.row-when {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  line-height: 1.7;
+}
+.row-when i { font-style: italic; text-transform: none; letter-spacing: .05em; }
+
+.row h3 {
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  font-weight: 600;
+  margin-bottom: .5rem;
+}
+.row-main p {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 58ch;
+  font-size: clamp(.95rem, 1.25vw, 1.1rem);
+}
+
+.row-tag {
+  font-family: var(--script);
+  font-style: normal;
+  text-transform: none;
+  color: var(--red);
+  font-size: .6em;
+  vertical-align: .2em;
+  margin-left: .55em;
+  letter-spacing: .02em;
+}
+
+.row-src {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  align-items: flex-start;
+}
+.row-src a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  font-size: .95rem;
+  letter-spacing: .06em;
+  transition: color .3s, border-color .3s;
+}
+.row-src a:hover { color: var(--red); border-color: var(--red); }
+.row-note { font-style: italic; color: var(--ink-soft); font-size: .9rem; }
+
+/* ============ 6 · contact — shared blocks live in base.css ============ */
+
+/* ============ reduced motion: static composition, no long runway ============ */
+@media (prefers-reduced-motion: reduce) {
+  [data-scene][data-motion="on"] .scene-runway { height: auto; }
+  [data-scene][data-motion="on"] .scene-stage {
+    position: static;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 2.5rem 0;
+  }
+}
+
+/* ============ responsive ============ */
+@media (max-width: 860px) {
+  .modes { grid-template-columns: 1fr; }
+  .practice-list .row { grid-template-columns: 3rem minmax(0, 1fr); }
+  .row-src {
+    grid-column: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .3rem 1.6rem;
+  }
+  .context-list .row { grid-template-columns: 1fr; }
+  .row-when { order: -1; }
+}
+
+@media (max-width: 760px) {
+  .identity-grid { grid-template-columns: 1fr; align-items: start; }
+  .identity-portrait { justify-self: center; margin-top: 2.5rem; }
+  .identity-portrait img { height: min(56vh, 440px); }
+  .identity-portrait img { height: min(56svh, 440px); }
+
+  /* vertical composition: three static bands, slight offsets, no runway */
+  .scene-stage { display: block; min-height: 0; padding: 1.5rem 0 3rem; }
+  .frag-word { position: static; font-size: clamp(2.6rem, 12.5vw, 4.2rem); margin-bottom: 2.2rem; }
+  .scene-frame { width: min(74vw, 340px); height: auto; margin-inline: auto; }
+  .frag--1 { --fx: 2;  --fy: 0;  --fw: 98;  --fh: 32; }
+  .frag--2, .frag--3 { display: none; }
+  .frag--4 { --fx: -3; --fy: 30; --fw: 106; --fh: 38; }
+  .frag--5 { --fx: 1;  --fy: 66; --fw: 98;  --fh: 34; }
+  .scene-label { display: none; }
+  .scene-line {
+    position: static;
+    transform: none;
+    width: min(36ch, 88%);
+    margin: 2.4rem auto 0;
+  }
+}

@@ -8,6 +8,13 @@
   --serif: "Bodoni Moda", "Didot", "Playfair Display", serif;
   --script: "Great Vibes", cursive;
   --jp: "Noto Serif JP", serif;
+
+  /* shared rhythm — spacing, measure, motion */
+  --gutter: clamp(1.2rem, 6vw, 6rem);
+  --measure: 62ch;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --dur-fast: .35s;
+  --dur-slow: .9s;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,7 +25,10 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--serif);
+  /* clip, not hidden: overflow-x:hidden forces overflow-y to `auto`, which
+     turns body into a scroll container and breaks position:sticky inside */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -35,18 +45,213 @@ body::after {
 
 img { max-width: 100%; display: block; }
 a { color: inherit; }
-ul { list-style: none; }
+ul, ol { list-style: none; }
 
-/* ============ reveal-on-scroll ============ */
-[data-reveal] {
+/* ============ accessibility ============ */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: .9rem; left: .9rem;
+  z-index: 200;
+  transform: translateY(-300%);
+  background: var(--ink);
+  color: var(--bg);
+  padding: .7rem 1.1rem;
+  font-size: .85rem;
+  letter-spacing: .12em;
+  text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease);
+}
+.skip-link:focus { transform: none; }
+
+/* ============ shared navigation (all routes) ============ */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: .1rem;
+  gap: clamp(1.1rem, 2.6vw, 2.2rem);
+  align-items: center;
+}
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: clamp(.78rem, .95vw, .9rem);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  position: relative;
+}
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 8px;
+  width: 100%; height: 1px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-fast) var(--ease);
+}
+.site-nav a:hover { color: var(--ink); }
+.site-nav a:hover::after,
+.site-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.site-nav a[aria-current="page"] { color: var(--ink); }
+
+/* ============ sub-route page head ============ */
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  flex-wrap: wrap;
+  row-gap: .3rem;
+  padding: 1.3rem var(--gutter);
+}
+.brand {
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-decoration: none;
+}
+.brand em {
+  font-style: normal;
+  color: var(--red);
+}
+
+/* ============ shared type ============ */
+.section {
+  padding: clamp(4.5rem, 11vw, 9rem) var(--gutter);
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.kicker {
+  font-size: clamp(.8rem, 1vw, .95rem);
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+}
+h2 {
+  font-size: clamp(2.2rem, 5.5vw, 4.6rem);
+  font-weight: 600;
+  line-height: 1.08;
+}
+.section-title {
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+}
+.section-title .sec-num {
+  font-size: clamp(.85rem, 1.1vw, 1rem);
+  letter-spacing: .25em;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+.lede {
+  max-width: var(--measure);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+.lede strong, .lede b { color: var(--ink); }
+
+/* ============ reveal — progressive enhancement ============
+   Content is fully readable with JS off (no .js class). The head inline
+   script adds .js before first paint; effects.js adds .reveal-ready only
+   after the controller is actually initialized — if the script fails to
+   load or throws, no class is added and everything stays readable. */
+.js.reveal-ready [data-reveal] {
   opacity: 0;
   transform: translateY(34px);
-  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
 }
-[data-reveal].is-visible { opacity: 1; transform: none; }
+.js.reveal-ready [data-reveal].is-visible { opacity: 1; transform: none; }
 
+.resume-link { color: var(--red); }
+
+/* ============ shared contact blocks ============ */
+.script-inline {
+  font-family: var(--script);
+  font-weight: 400;
+  color: var(--red);
+  font-size: .9em;
+  margin-left: .18em;
+}
+.contact-wrap {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  align-items: flex-start;
+}
+.contact-primary {
+  font-size: clamp(1.35rem, 3.2vw, 2.6rem);
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: .3rem;
+  transition: color .3s, border-color .3s;
+  overflow-wrap: anywhere;
+}
+.contact-primary:hover { color: var(--red); border-color: var(--red); }
+.contact-secondary {
+  display: flex;
+  gap: clamp(1.2rem, 3vw, 2.5rem);
+  flex-wrap: wrap;
+}
+.contact-secondary a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  transition: color .3s, border-color .3s;
+}
+.contact-secondary a:hover { color: var(--red); border-color: var(--red); }
+
+/* ============ footer (all routes) ============ */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  flex-wrap: wrap;
+  padding: 1.4rem var(--gutter);
+  border-top: 1px solid var(--ink);
+  font-size: .85rem;
+  letter-spacing: .08em;
+}
+.footer a { text-decoration: none; }
+.footer a:hover { font-style: italic; }
+
+/* ============ reduced motion ============ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  [data-reveal] { opacity: 1; transform: none; transition: none; }
-  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .js.reveal-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
+  /* cut movement-causing transitions too, not just animations */
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }

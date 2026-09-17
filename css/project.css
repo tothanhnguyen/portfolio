@@ -1,0 +1,145 @@
+/* ============ project case study — technical 4/10 ============
+   Readable decisions: title/premise → metadata → problem → solution →
+   personal contribution → trade-offs → evidence → source/next. */
+
+.page-head { border-bottom: 1px solid var(--ink); }
+
+.case-head { padding-top: clamp(3rem, 8vw, 6.5rem); }
+
+.case-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: .88rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: color .3s;
+}
+.case-back:hover { color: var(--red); }
+
+.case-num {
+  margin-top: 2.2rem;
+  font-size: .85rem;
+  letter-spacing: .22em;
+  color: var(--ink-soft);
+}
+.case-title {
+  margin-top: 1rem;
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 600;
+  line-height: .95;
+}
+.case-premise {
+  margin-top: 1.4rem;
+  font-size: clamp(1.15rem, 2vw, 1.7rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 36ch;
+}
+
+.case-meta {
+  margin-top: clamp(2.2rem, 5vw, 3.2rem);
+  border-top: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.case-meta > div {
+  border-bottom: 1px solid var(--ink);
+  padding: 1.1rem .2rem;
+}
+.case-meta dt {
+  font-size: .78rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: .45rem;
+}
+.case-meta dd {
+  font-size: clamp(.95rem, 1.25vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.case-sec h2 { margin-bottom: 1.4rem; }
+.case-sec p {
+  max-width: var(--measure);
+  line-height: 1.8;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+}
+.case-sec p + p { margin-top: 1.1rem; }
+.case-sec strong, .case-sec b { color: var(--ink); }
+.case-sec code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .88em;
+  background: var(--bg-soft);
+  padding: .1em .4em;
+}
+
+.case-points { margin-top: 1.6rem; display: grid; gap: 1.1rem; }
+.case-points li {
+  border-left: 2px solid var(--ink);
+  padding-left: 1.2rem;
+  max-width: var(--measure);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  font-size: clamp(.98rem, 1.25vw, 1.12rem);
+}
+
+.case-fig { margin: 2.2rem 0; }
+.case-fig img { width: 100%; height: auto; border: 1px solid var(--ink); }
+.case-fig figcaption {
+  margin-top: .8rem;
+  font-size: .82rem;
+  font-style: italic;
+  letter-spacing: .05em;
+  color: var(--ink-soft);
+}
+
+.case-list { margin-top: .4rem; display: grid; gap: .9rem; }
+.case-list li {
+  border-top: 1px solid var(--ink);
+  padding: 1.05rem 0;
+  max-width: var(--measure);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  font-size: clamp(.98rem, 1.25vw, 1.12rem);
+}
+
+.evidence-note {
+  margin-top: 1.2rem;
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+  line-height: 1.7;
+}
+
+.case-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem 2.5rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--ink);
+  margin-top: 1rem;
+  padding-top: 2.2rem;
+}
+.case-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  font-size: clamp(.95rem, 1.2vw, 1.1rem);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: .2rem;
+  transition: color .3s, border-color .3s;
+}
+.case-nav a:hover { color: var(--red); border-color: var(--red); }
+
+@media (max-width: 860px) {
+  .case-meta { grid-template-columns: 1fr; }
+  .case-nav { flex-direction: column; align-items: flex-start; }
+}

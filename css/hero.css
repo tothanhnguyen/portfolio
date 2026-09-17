@@ -19,6 +19,14 @@
   z-index: 6;
 }
 
+.hero-nav { animation: fade-down 1s .5s both; }
+/* the portrait rises behind the top bar: halo the links like the jp line,
+   so they read over the dark hair/jacket without a background box */
+.hero-nav a {
+  text-shadow: 1px 1px 0 var(--bg), -1px -1px 0 var(--bg),
+               1px -1px 0 var(--bg), -1px 1px 0 var(--bg), 0 0 6px var(--bg);
+}
+
 .uit-block { display: flex; gap: .8rem; align-items: center; animation: fade-down 1s .2s both; }
 .uit-orbit { width: clamp(44px, 4.5vw, 62px); height: auto; transition: transform .35s cubic-bezier(.22,1,.36,1); }
 .uit-block a:hover .uit-orbit { transform: rotate(-8deg) scale(1.06); }
@@ -165,7 +173,8 @@
   width: 3px; height: 8px; border-radius: 2px;
   background: var(--ink-soft);
   transform: translateX(-50%);
-  animation: wheel 1.6s infinite ease-in-out;
+  /* a cue, not an infinite loop: pulses twice, then rests */
+  animation: wheel 1.6s 2 ease-in-out;
 }
 
 /* ============ keyframes ============ */

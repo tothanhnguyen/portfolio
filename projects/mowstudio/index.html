@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d8d7d4">
+  <title>MowStudio — Case Study · T'NGUYEN</title>
+  <meta name="description" content="MowStudio — booking infrastructure for creative studios. A Next.js modular monolith with transaction-safe bookings, SePay/VietQR payments, and CI quality gates.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MowStudio — Case Study">
+  <meta property="og:description" content="Booking infrastructure for creative studios — modular monolith, advisory-lock concurrency, idempotent payment webhooks.">
+  <meta property="og:image" content="/assets/pose-cutout.png">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="/css/base.css?v=260921-motion-font500">
+  <link rel="stylesheet" href="/css/project.css?v=260921-motion">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="page-head">
+    <a class="brand" href="/">T<em>’</em>NGUYEN</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/#projects" aria-current="true">Work</a>
+      <a href="/about/">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article class="case">
+
+      <header class="case-head section">
+        <a class="case-back" href="/#projects">← Selected work</a>
+        <p class="case-num" data-reveal>01 / July 2026 — Sep 2026 · personal project</p>
+        <h1 class="case-title" data-reveal>MowStudio</h1>
+        <p class="case-premise" data-reveal>Booking infrastructure for creative studios.</p>
+        <dl class="case-meta" data-reveal>
+          <div><dt>Role</dt><dd>Solo · end-to-end</dd></div>
+          <div><dt>Period</dt><dd>July 2026 — Sep 2026</dd></div>
+          <div><dt>Stack</dt><dd>Next.js 16 · React 19 · TypeScript · PostgreSQL · Prisma</dd></div>
+          <div><dt>Shape</dt><dd>Modular monolith on Vercel (region sin1)</dd></div>
+        </dl>
+      </header>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Problem</h2>
+        <p data-reveal>Photo, podcast, and music studios need scheduling that survives real
+          concurrency: rooms have working hours and blocked slots, services carry duration
+          and buffer, guests book without accounts, and a 30% deposit has to be collected
+          and reconciled.</p>
+        <p data-reveal>The hard part isn't drawing a calendar — it's making it impossible for two
+          people to book the same slot at the same moment, and making a third-party payment
+          webhook safe to receive twice.</p>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Solution &amp; architecture</h2>
+        <p data-reveal>One Next.js App Router application. Server Components render pages; Server
+          Actions and Route Handlers are the transport layer; feature-first layering
+          (application → domain → infrastructure) keeps Prisma, Supabase Auth, SePay, Resend,
+          and Sentry behind adapters. There is no separate gateway — Vercel ingress is the
+          boundary, with <code>/api/health</code> and <code>/api/ready</code> deliberately
+          separating process life from database life.</p>
+        <ul class="case-points">
+          <li data-reveal><b>Concurrency is enforced at the database.</b> Booking creation runs in a
+            Prisma transaction holding a PostgreSQL advisory lock per room + local date;
+            overlap checks include duration <em>and</em> buffer; unpaid holds expire.</li>
+          <li data-reveal><b>Payments are idempotent by design.</b> SePay webhooks are verified
+            (HMAC-SHA256), normalized to provider-neutral events, and deduplicated by
+            (provider, eventId); the 30% deposit is computed in integer VND with BigInt,
+            VietQR rendered per booking.</li>
+          <li data-reveal><b>Guests without accounts still get private bookings</b> — the raw access
+            token lives in an HTTP-only cookie, only its hash is stored, matched in
+            constant time; logged-in users can claim past guest bookings by email.</li>
+          <li data-reveal><b>Roles are guarded server-side.</b> Supabase Auth handles email/password
+            and Google OAuth; admin pages and actions re-check the role in server code,
+            never in the UI.</li>
+        </ul>
+        <figure class="case-fig" data-reveal>
+          <img src="/assets/projects/mowstudio-architecture.svg?v=editorial-architecture-1" width="1600" height="1080" loading="lazy"
+               alt="MowStudio architecture diagram: browser through Vercel into the Next.js modular monolith, backed by PostgreSQL, Supabase Auth, SePay, Resend and Sentry">
+          <figcaption>Architecture overview — from the project's technical documentation
+            (docs/reports/mowstudio-architecture.svg in the repository).</figcaption>
+        </figure>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>My contribution</h2>
+        <p data-reveal>Solo and end-to-end: the data model (11 Prisma models), the availability
+          algorithm (15-minute slots across working windows, blocked slots, duration and
+          buffer), booking and payment lifecycles, guest claim flow, the admin surface
+          (rooms, services, schedule, blocked slots, calendar, payments and refunds),
+          notification templates with send-log idempotency, structured logging with
+          recursive redaction, and the CI pipeline.</p>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Trade-offs</h2>
+        <ul class="case-list">
+          <li data-reveal><b>Modular monolith, not microservices.</b> One deployable keeps iteration
+            fast; the price is no independent scaling per feature — acceptable at studio
+            scale, revisited if a partner API appears.</li>
+          <li data-reveal><b>No queue or background worker yet.</b> Emails send inline after
+            mutations; the documented upgrade path is a transactional outbox once volume
+            demands it.</li>
+          <li data-reveal><b>Refunds are an operations state, not a bank integration:</b>
+            <code>REQUESTED → PROCESSING → REFUNDED</code> is tracked and audited, payout
+            happens offline.</li>
+          <li data-reveal><b>AuditLog exists in the schema without a write path yet</b> — flagged
+            in the project's own review, not hidden.</li>
+        </ul>
+      </section>
+
+      <section class="case-sec section">
+        <h2 data-reveal>Evidence</h2>
+        <p data-reveal>The repository carries <strong>65 unit/component test files</strong> and
+          <strong>12 Playwright E2E specs</strong> (desktop + mobile Chromium). A documented
+          verification run in <strong>August 2026</strong> reported <strong>203 tests
+          passing</strong> and the Playwright suite at <strong>46 passed / 4 skipped</strong> —
+          numbers tied to that run, not to a file count.</p>
+        <p class="evidence-note" data-reveal>CI runs quality, integration (PostgreSQL 18 service),
+          critical E2E, and build jobs on every push; production migration is gated behind
+          an explicit confirmation env and separated from app boot.</p>
+      </section>
+
+      <nav class="case-nav section" aria-label="Case study navigation">
+        <a href="/projects/chat-server/">Next: Chat Server →</a>
+        <a href="https://github.com/tothanhnguyen/studio-booking-web" target="_blank" rel="noopener">Source ↗</a>
+      </nav>
+
+    </article>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year">2026</span> Thành Nguyên</span>
+    <a href="/#projects">Selected work ↑</a>
+  </footer>
+
+  <script src="/js/effects.js" defer></script>
+</body>
+</html>

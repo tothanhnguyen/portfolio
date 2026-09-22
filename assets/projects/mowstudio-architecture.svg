@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">MowStudio architecture overview</title>
+  <desc id="desc">Editorial architecture plate showing the browser and Vercel ingress feeding a Next.js modular monolith, with PostgreSQL, Supabase Auth, SePay, Resend, Sentry and CI/CD around it.</desc>
+  <defs>
+    <pattern id="grain" width="96" height="96" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="16" r=".7" fill="#101010" opacity=".09"/>
+      <circle cx="54" cy="42" r=".55" fill="#101010" opacity=".07"/>
+      <circle cx="82" cy="78" r=".65" fill="#101010" opacity=".08"/>
+      <path d="M18 70h1M70 12h1M38 89h1" stroke="#101010" stroke-width=".6" opacity=".06"/>
+    </pattern>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12" fill="none" stroke="#a33122" stroke-width="1.4"/>
+    </marker>
+    <marker id="arrow-muted" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12" fill="none" stroke="#3a3a3a" stroke-width="1.4"/>
+    </marker>
+    <style>
+      .title { font: 600 42px "Bodoni Moda", Didot, "Playfair Display", serif; fill: #101010; }
+      .subtitle { font: 500 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #3a3a3a; letter-spacing: .03em; }
+      .section { font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #a33122; letter-spacing: .18em; }
+      .label { font: 600 22px "Bodoni Moda", Didot, "Playfair Display", serif; fill: #101010; }
+      .body { font: 500 16px "Bodoni Moda", Didot, "Playfair Display", serif; fill: #3a3a3a; }
+      .small { font: 500 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #3a3a3a; }
+      .pill { font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #101010; letter-spacing: .04em; }
+      .box { fill: #cfceca; stroke: #101010; stroke-width: 1.5; }
+      .box-soft { fill: #d8d7d4; stroke: #101010; stroke-width: 1.5; }
+      .box-red { fill: #a33122; stroke: #101010; stroke-width: 1.5; }
+      .box-red-text { font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #d8d7d4; letter-spacing: .04em; }
+      .box-red .small { fill: #d8d7d4; }
+      .line { stroke: #a33122; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+      .line-muted { stroke: #3a3a3a; stroke-width: 1.25; fill: none; marker-end: url(#arrow-muted); }
+      .dashed { stroke-dasharray: 7 7; }
+      .hairline { stroke: #101010; stroke-width: 1; }
+      .index { font: 600 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #a33122; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1080" fill="#d8d7d4"/>
+  <rect width="1600" height="1080" fill="url(#grain)" opacity=".5"/>
+  <path d="M80 145H1520" class="hairline"/>
+  <path d="M80 145h170" stroke="#a33122" stroke-width="3"/>
+
+  <text x="80" y="88" class="title">MowStudio — architecture</text>
+  <text x="80" y="121" class="subtitle">NEXT.JS 16 / MODULAR MONOLITH / TRANSACTION-SAFE BOOKING</text>
+  <text x="1520" y="88" class="index" text-anchor="end">01 / SYSTEM PLATE</text>
+  <text x="1520" y="121" class="small" text-anchor="end">REGION SIN1 · VERCEL INGRESS</text>
+
+  <text x="80" y="184" class="section">01 / CLIENT + INGRESS</text>
+  <rect x="80" y="210" width="300" height="150" class="box-soft"/>
+  <text x="108" y="252" class="label">Browser</text>
+  <text x="108" y="284" class="body">React 19 UI</text>
+  <text x="108" y="310" class="body">Server-rendered pages</text>
+  <text x="108" y="336" class="body">Client wizard / forms</text>
+  <text x="108" y="356" class="small">/studios · /booking · /admin</text>
+
+  <rect x="470" y="210" width="390" height="150" class="box"/>
+  <text x="498" y="252" class="label">Vercel + Next.js ingress</text>
+  <text x="498" y="284" class="body">src/proxy.ts · session refresh</text>
+  <text x="498" y="310" class="body">App Router boundary</text>
+  <text x="498" y="336" class="body">No separate API Gateway</text>
+  <text x="498" y="356" class="small">Vercel region: sin1</text>
+  <path d="M380 285H470" class="line"/>
+
+  <text x="1110" y="184" class="section">02 / IDENTITY</text>
+  <rect x="1110" y="210" width="410" height="150" class="box-soft"/>
+  <text x="1138" y="252" class="label">Supabase Auth</text>
+  <text x="1138" y="284" class="body">Email/password · Google OAuth</text>
+  <text x="1138" y="310" class="body">Verified session cookie</text>
+  <text x="1138" y="336" class="body">Local User mirror + role</text>
+  <text x="1138" y="356" class="small">identity boundary</text>
+  <path d="M860 285H1110" class="line-muted"/>
+
+  <text x="80" y="430" class="section">03 / NEXT.JS MODULAR MONOLITH</text>
+  <rect x="80" y="458" width="1010" height="430" class="box"/>
+  <rect x="80" y="458" width="10" height="430" fill="#a33122"/>
+  <text x="120" y="506" class="label">One deployable · feature-first boundaries</text>
+  <text x="120" y="532" class="small">application → domain → infrastructure</text>
+
+  <rect x="120" y="560" width="270" height="86" class="box-soft"/>
+  <text x="146" y="596" class="body">App Router pages</text>
+  <text x="146" y="624" class="small">Server Components</text>
+  <rect x="420" y="560" width="270" height="86" class="box-soft"/>
+  <text x="446" y="596" class="body">Route Handlers</text>
+  <text x="446" y="624" class="small">availability / webhook / probes</text>
+  <rect x="720" y="560" width="270" height="86" class="box-soft"/>
+  <text x="746" y="596" class="body">Server Actions</text>
+  <text x="746" y="624" class="small">booking / admin mutations</text>
+
+  <text x="120" y="702" class="section">FEATURE MODULES</text>
+  <rect x="120" y="728" width="140" height="118" class="box-red"/>
+  <text x="140" y="762" class="box-red-text">AUTH</text>
+  <text x="140" y="790" class="box-red-text">roles</text>
+  <text x="140" y="816" class="box-red-text">guest claim</text>
+  <rect x="278" y="728" width="140" height="118" class="box-soft"/>
+  <text x="298" y="762" class="pill">CATALOG</text>
+  <text x="298" y="790" class="small">rooms / services</text>
+  <text x="298" y="816" class="small">pricing</text>
+  <rect x="436" y="728" width="140" height="118" class="box-soft"/>
+  <text x="456" y="762" class="pill">AVAILABILITY</text>
+  <text x="456" y="790" class="small">slots / schedule</text>
+  <text x="456" y="816" class="small">blocked windows</text>
+  <rect x="594" y="728" width="140" height="118" class="box-red"/>
+  <text x="614" y="762" class="box-red-text">BOOKING</text>
+  <text x="614" y="790" class="box-red-text">hold 10m</text>
+  <text x="614" y="816" class="box-red-text">lock / lifecycle</text>
+  <rect x="752" y="728" width="140" height="118" class="box-soft"/>
+  <text x="772" y="762" class="pill">PAYMENT</text>
+  <text x="772" y="790" class="small">SePay / VietQR</text>
+  <text x="772" y="816" class="small">refund</text>
+  <rect x="910" y="728" width="140" height="118" class="box-soft"/>
+  <text x="930" y="762" class="pill">OPS</text>
+  <text x="930" y="790" class="small">email / logs</text>
+  <text x="930" y="816" class="small">Sentry</text>
+
+  <path d="M665 360V458" class="line"/>
+  <text x="690" y="420" class="small">HTTP + actions</text>
+
+  <text x="1150" y="430" class="section">04 / DATA + CONCURRENCY</text>
+  <rect x="1150" y="458" width="370" height="245" class="box-soft"/>
+  <text x="1180" y="502" class="label">PostgreSQL / Supabase DB</text>
+  <text x="1180" y="536" class="body">Prisma 7 + adapter-pg</text>
+  <text x="1180" y="566" class="body">11 models / migrations</text>
+  <text x="1180" y="596" class="body">Transactions + row locks</text>
+  <text x="1180" y="626" class="body">Advisory lock: room / date</text>
+  <text x="1180" y="666" class="small">DATABASE_URL pooled</text>
+  <text x="1180" y="686" class="small">DIRECT_URL for migration</text>
+  <path d="M1090 838H1150" class="line"/>
+  <text x="1010" y="812" class="small">Prisma</text>
+
+  <text x="1150" y="760" class="section">05 / PROVIDER ADAPTERS</text>
+  <rect x="1150" y="788" width="370" height="100" class="box"/>
+  <text x="1180" y="824" class="body">SePay webhook + VietQR</text>
+  <text x="1180" y="850" class="body">Resend email · Sentry telemetry</text>
+  <text x="1180" y="876" class="small">external effects behind adapters</text>
+  <path d="M1090 820H1150" class="line-muted dashed"/>
+
+  <text x="80" y="952" class="section">06 / DELIVERY</text>
+  <rect x="80" y="976" width="1010" height="64" class="box-soft"/>
+  <text x="112" y="1016" class="body">CI quality gates</text>
+  <text x="330" y="1016" class="small">unit + integration + critical E2E</text>
+  <path d="M620 976V1040" class="hairline"/>
+  <text x="660" y="1016" class="body">GitHub Actions</text>
+  <text x="858" y="1016" class="small">→ Vercel preview / production</text>
+  <path d="M600 888V976" class="line-muted dashed"/>
+  <text x="620" y="934" class="small">build + verify</text>
+
+  <text x="1150" y="952" class="small">READING KEY</text>
+  <path d="M1150 980H1210" class="line"/>
+  <text x="1230" y="985" class="small">request / data flow</text>
+  <path d="M1150 1012H1210" class="line-muted dashed"/>
+  <text x="1230" y="1017" class="small">side effect / delivery</text>
+  <rect x="1150" y="1032" width="60" height="20" class="box-red"/>
+  <text x="1230" y="1047" class="small">critical path</text>
+</svg>

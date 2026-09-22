@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-label="Chat Server architecture overview">
+  <title>Chat Server Microservices — architecture overview</title>
+  <desc>Simplified from the project README: desktop client through a dual-mode JWT gateway, twelve microservices over gRPC, RabbitMQ events, MySQL per service, MinIO and Keycloak.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#101010"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#a33122"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#e6e5e1"/>
+
+  <style>
+    .t  { font: 600 30px Georgia, "Times New Roman", serif; fill: #101010; }
+    .s  { font: italic 21px Georgia, "Times New Roman", serif; fill: #3a3a3a; }
+    .l  { font: 21px Georgia, "Times New Roman", serif; fill: #3a3a3a; }
+    .b  { fill: #f4f3ef; stroke: #101010; stroke-width: 2; }
+    .w  { fill: #f4f3ef; stroke: #a33122; stroke-width: 2; }
+  </style>
+
+  <!-- row 1: client → gateway ← keycloak -->
+  <rect class="b" x="80" y="110" width="340" height="140"/>
+  <text class="t" x="110" y="165">Desktop Client</text>
+  <text class="s" x="110" y="205">Java Swing + FlatLaf</text>
+
+  <rect class="b" x="620" y="110" width="420" height="140"/>
+  <text class="t" x="650" y="158">API Gateway — :8080</text>
+  <text class="l" x="650" y="192">Spring Cloud Gateway · JwtAuthFilter</text>
+  <text class="l" x="650" y="222">Keycloak RS256 first · HS256 fallback</text>
+
+  <rect class="b" x="1240" y="110" width="280" height="140"/>
+  <text class="t" x="1268" y="165">Keycloak 24</text>
+  <text class="s" x="1268" y="205">OIDC · RS256 via JWKS</text>
+
+  <line x1="420" y1="180" x2="612" y2="180" stroke="#101010" stroke-width="2" marker-end="url(#a)"/>
+  <text class="l" x="430" y="162">REST · WebSocket</text>
+
+  <line x1="1240" y1="180" x2="1048" y2="180" stroke="#101010" stroke-width="2" marker-end="url(#a)"/>
+  <text class="l" x="1080" y="162">tokens</text>
+
+  <!-- gateway → services -->
+  <line x1="830" y1="250" x2="830" y2="372" stroke="#101010" stroke-width="2" marker-end="url(#a)"/>
+  <text class="l" x="852" y="345">gRPC — synchronous, internal (grpc-contracts/*.proto)</text>
+
+  <!-- services band: database-per-service -->
+  <rect class="b" x="80" y="380" width="1440" height="290"/>
+  <text class="t" x="110" y="428">12 business microservices</text>
+  <text class="s" x="470" y="428">database-per-service — MySQL 8, no cross-database joins</text>
+
+  <rect class="b" x="110" y="460" width="240" height="150"/>
+  <text class="t" x="134" y="512">auth</text>
+  <text class="l" x="134" y="548">JWT · refresh tokens</text>
+  <text class="l" x="134" y="576">BCrypt</text>
+
+  <rect class="b" x="400" y="460" width="240" height="150"/>
+  <text class="t" x="424" y="512">messaging</text>
+  <text class="l" x="424" y="548">WebSocket · /ws/chat</text>
+  <text class="l" x="424" y="576">reactions · pins</text>
+
+  <rect class="b" x="690" y="460" width="240" height="150"/>
+  <text class="t" x="714" y="512">presence</text>
+  <text class="l" x="714" y="548">online · idle · dnd</text>
+  <text class="l" x="714" y="576">invisible</text>
+
+  <rect class="b" x="980" y="460" width="240" height="150"/>
+  <text class="t" x="1004" y="512">servers · channels</text>
+  <text class="l" x="1004" y="548">invites · RBAC</text>
+  <text class="l" x="1004" y="576">permission bitmask</text>
+
+  <rect class="b" x="1270" y="460" width="220" height="150"/>
+  <text class="t" x="1294" y="512">file</text>
+  <text class="l" x="1294" y="548">MinIO (S3)</text>
+  <text class="l" x="1294" y="576">thumbnails</text>
+
+  <text class="s" x="110" y="650">+ 7 more services (user-profile, friend, notification, role, log …) · 15 Maven modules</text>
+
+  <!-- events -->
+  <line x1="520" y1="670" x2="520" y2="742" stroke="#a33122" stroke-width="2" marker-end="url(#r)"/>
+  <text class="l" x="540" y="715">publish</text>
+
+  <rect class="w" x="80" y="750" width="880" height="140"/>
+  <text class="t" x="110" y="805">RabbitMQ — Topic Exchange</text>
+  <text class="l" x="110" y="845">chat.exchange · presence.status · notification.* · log.* — asynchronous</text>
+
+  <line x1="960" y1="820" x2="1232" y2="820" stroke="#a33122" stroke-width="2" marker-end="url(#r)"/>
+  <text class="l" x="1030" y="800">consume</text>
+
+  <rect class="w" x="1240" y="750" width="280" height="140"/>
+  <text class="t" x="1268" y="805">log-service → Loki</text>
+  <text class="s" x="1268" y="845">audit trail via Promtail</text>
+
+  <!-- devops strip -->
+  <text class="l" x="800" y="955" text-anchor="middle">Docker · Kubernetes (Kustomize) · Jenkins · SonarQube · Prometheus · Grafana</text>
+</svg>

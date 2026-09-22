@@ -1,0 +1,44 @@
+PASS desktop-1440 / no-overflow/clip — sw=1440 vw=1440
+PASS desktop-1440 home: no architecture svg request — clean
+PASS home: no fragment nodes — 0
+PASS desktop-1440 /about/ no-overflow/clip — sw=1440 vw=1440
+PASS desktop-1440 about: no about.js request — clean
+PASS about: no scene nodes — 0
+PASS about: zero data-reveal (no content motion) — 0
+PASS desktop-1440 /projects/mowstudio/ no-overflow/clip — sw=1440 vw=1440
+PASS case: mowstudio-architecture.svg still loads — 1
+PASS desktop-1440 /projects/chat-server/ no-overflow/clip — sw=1440 vw=1440
+PASS case: chat-architecture.svg still loads — 1
+PASS laptop-1280 / no-overflow/clip — sw=1280 vw=1280
+PASS laptop-1280 home: no architecture svg request — clean
+PASS laptop-1280 /about/ no-overflow/clip — sw=1280 vw=1280
+PASS laptop-1280 about: no about.js request — clean
+PASS laptop-1280 /projects/mowstudio/ no-overflow/clip — sw=1280 vw=1280
+PASS laptop-1280 /projects/chat-server/ no-overflow/clip — sw=1280 vw=1280
+PASS tablet-768 / no-overflow/clip — sw=768 vw=768
+PASS tablet-768 home: no architecture svg request — clean
+PASS tablet-768 /about/ no-overflow/clip — sw=768 vw=768
+PASS tablet-768 about: no about.js request — clean
+PASS tablet-768 /projects/mowstudio/ no-overflow/clip — sw=768 vw=768
+PASS tablet-768 /projects/chat-server/ no-overflow/clip — sw=768 vw=768
+PASS mobile-390 / no-overflow/clip — sw=390 vw=390
+PASS mobile-390 home: no architecture svg request — clean
+PASS mobile-390 /about/ no-overflow/clip — sw=390 vw=390
+PASS mobile-390 about: no about.js request — clean
+PASS mobile-390 /projects/mowstudio/ no-overflow/clip — sw=390 vw=390
+PASS mobile-390 /projects/chat-server/ no-overflow/clip — sw=390 vw=390
+PASS mobile-320 / no-overflow/clip — sw=320 vw=320
+PASS mobile-320 home: no architecture svg request — clean
+PASS mobile-320 /about/ no-overflow/clip — sw=320 vw=320
+PASS mobile-320 about: no about.js request — clean
+PASS mobile-320 /projects/mowstudio/ no-overflow/clip — sw=320 vw=320
+PASS mobile-320 /projects/chat-server/ no-overflow/clip — sw=320 vw=320
+PASS no-JS /: all content visible — 0 hidden
+PASS no-JS /about/: all content visible — 0 hidden
+PASS reduced-motion /: all content visible — 0 hidden
+PASS reduced-motion /about/: all content visible — 0 hidden
+PASS keyboard: nav link focusable — {"tag":"A","outline":"solid","dest":"/#projects"}
+{
+  "failed": 0,
+  "total": 40
+}

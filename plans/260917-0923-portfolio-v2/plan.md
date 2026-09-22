@@ -91,8 +91,8 @@ Tất cả phase bên dưới **đã triển khai ngày 2026-09-17** (trạng th
 1. IDENTITY — `TÔ / THÀNH / NGUYÊN`, SOFTWARE ENGINEERING; portrait cùng nguồn với Home nhưng bố cục mới.
 2. INTRODUCTION — “I BUILD SOFTWARE” và THINK / SEE / ACT; câu phụ phân biệt kinh nghiệm thực tế với hướng khám phá.
 3. FRAGMENTS — một scene ảnh/typography, practice labels SOFTWARE / FRONTEND / AI / VISION.
-4. PRACTICE — bốn mục ngắn trong luồng tài liệu bình thường, có dự án/nguồn liên quan; Vision gắn “Exploring”.
-5. CONTEXT — timeline từ CV: UIT 2024–2028 (expected), Chat Jan–Jun 2026, MowStudio Jul 2026–present, Top 9 Student Leaders 2026; không bịa việc làm.
+4. PRACTICE — bốn mục ngắn trong luồng tài liệu bình thường, có dự án/nguồn liên quan; AI section phân biệt workflow Orca + OMP đang dùng với Laplace Demon — agent runtime Python đang phát triển, có provider tương thích OpenAI, tool boundary được validate, context/session memory hữu hạn và Telegram runtime; Vision gắn “Exploring”.
+5. CONTEXT — timeline từ CV: UIT 2024–2028 (expected), Chat Jan–Jun 2026, MowStudio Jul–Sep 2026, Top 9 Student Leaders 2026; không bịa việc làm.
 6. CONTACT — closing gọn, email, GitHub, résumé, đường về Selected Work.
 
 **Composition:** năm mảnh portrait lớn + một mảnh typography; tối đa sáu fragment. Các mảnh ảnh dùng chung một hệ tọa độ canvas và cùng source để ghép lại thật sự khớp. Clip polygon tĩnh, không morph clip-path mỗi frame. Không nhân sáu crop độc lập tới mức mất khả năng reconstruction. Vùng mặt nằm trong mảnh trung tâm, chuyển động ít nhất.
@@ -133,7 +133,7 @@ Dùng interpolation piecewise + smoothstep giữa keyframe; scroll ngược ph�
 
 **Home:**
 
-- Chapter 01: text trái, visual lớn phải; `01 / 2026`, MOWSTUDIO, một câu “Booking infrastructure for creative studios.”, khoảng ba stack labels, VIEW PROJECT.
+- Chapter 01: text trái, visual lớn phải; `01 / July 2026 — Sep 2026`, MOWSTUDIO, một câu “Booking infrastructure for creative studios.”, khoảng ba stack labels, VIEW PROJECT.
 - Chapter 02: visual trái, text phải; Chat Server Microservices, một câu giải thích real-time/distributed system, team context và personal contribution ngắn.
 - Không box/card/shadow; dùng grid bất đối xứng, khoảng trắng, caption nhỏ. Visual có thể vượt grid text nhưng không vượt viewport.
 - Mobile DOM reading order nhất quán: số/tên → premise → visual/caption → links. Desktop đổi grid placement, không đảo tab order.

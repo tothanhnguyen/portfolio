@@ -20,6 +20,17 @@ blocks: []
 
 Kế thừa website vanilla hiện có, không rebuild. Giữ màu bạc ấm, ink tối, đỏ trầm, Bodoni, script tiết chế, chữ Nhật và hero T’NGUYEN. Giữ engineering content thật và đường dẫn case study.
 
+### Ngoại lệ mới — portrait image do user cung cấp (đã tách nền)
+
+User yêu cầu thay portrait video ở About bằng ảnh `profie.png`, giữ đường polygon trắng + bốn node hình học, nhưng bỏ chữ và nền xám. Đây là xử lý static cutout, không đưa lại DOM fragment, sticky scene hay scroll-scrub.
+
+- Xử lý: Vision PersonSegmentation (macOS native) tách người trung tâm và hai bàn tay tiền cảnh; composite trên đúng màu nền trang `#d8d7d4`; vẽ lại polygon/node để đường hình học liên tục sau khi tách nền.
+- File web: `assets/about-focus.webp`, 941×1672, khoảng 69 KB. Source `profie.png` giữ ở root để tái xử lý và loại khỏi Vercel deployment.
+- Bố cục: ảnh dọc nổi trực tiếp trên nền trang, không video, không khung đen, không caption phụ; polygon/node là điểm nhấn thị giác.
+- Đã bỏ `js/about-video.js` và asset video/poster cũ sau khi migrate markup.
+- Opening About dùng curtain reveal vanilla với panel ink hiện `ABOUT` + chữ ký, lift sau ~620ms; About chạy lại mỗi lần reload để tạo opening rõ ràng. Reduced-motion và no-JS vào thẳng nội dung.
+- Đã verify desktop/mobile ở bước smoke sau khi asset được mount; chưa test Safari/iOS thật.
+
 ## 2. Định hướng thiết kế
 
 **Đơn giản nhưng không sơ sài:** ít thành phần, cỡ chữ có phân cấp, khoảng trắng vừa đủ, canh lề nhất quán. Không lấy “editorial” làm lý do để mọi section đều có heading khổng lồ hoặc padding cả màn hình.
@@ -58,7 +69,7 @@ Bố cục desktop dự kiến:
 SELECTED WORK                                      01—02
 
 01   MowStudio                       Booking infrastructure
-     Personal project · 2026         for creative studios.
+     Personal project · July 2026 — Sep 2026             for creative studios.
                                      Next.js · TypeScript · PostgreSQL
                                      View project →
 

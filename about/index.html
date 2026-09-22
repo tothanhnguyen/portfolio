@@ -13,14 +13,33 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js")</script>
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/about.css">
+  <link rel="stylesheet" href="/css/base.css?v=260921-motion-font500">
+  <link rel="stylesheet" href="/css/about.css?v=260921-motion">
 </head>
 <body>
 
   <a class="skip-link" href="#main">Skip to content</a>
+  <!-- About opening curtain: progressive enhancement only. -->
+  <script>
+  (function () {
+    try {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var root = document.documentElement;
+      root.classList.add("curtain-active");
+      var panel = document.createElement("div");
+      panel.className = "curtain";
+      panel.setAttribute("aria-hidden", "true");
+      panel.innerHTML = '<span class="curtain-mark">ABOUT</span><span class="curtain-sig" lang="vi">Thành Nguyên</span>';
+      document.body.appendChild(panel);
+      setTimeout(function () {
+        root.classList.remove("curtain-active");
+        if (panel.parentNode) panel.parentNode.removeChild(panel);
+      }, 2600);
+    } catch (e) { /* private mode / ancient browser: no curtain */ }
+  })();
+  </script>
 
   <header class="page-head">
     <a class="brand" href="/">T<em>’</em>NGUYEN</a>
@@ -46,10 +65,11 @@
           <p class="identity-role">Software Engineering — University of Information Technology, VNU-HCM</p>
         </div>
         <figure class="identity-portrait">
-          <picture>
-            <source srcset="/assets/pose-cutout.webp" type="image/webp">
-            <img src="/assets/pose-cutout.png" alt="Portrait of Thành Nguyên" width="515" height="1115" loading="eager">
-          </picture>
+          <div class="identity-portrait-frame">
+            <img class="identity-portrait-image" src="/assets/about-focus.webp"
+                 alt="Portrait of Thành Nguyên with a geometric focus frame"
+                 width="941" height="1672" fetchpriority="high">
+          </div>
         </figure>
       </div>
     </section>
@@ -59,7 +79,7 @@
       <p class="kicker">( introduction )</p>
       <h2>I build software.</h2>
       <p class="lede">Student of Software Engineering at the University of Information Technology (UIT),
-        VNU-HCM — class of <strong>2028</strong>, based in Ho Chi Minh City. I build web systems
+        VNU-HCM — class of <strong>2024</strong>, based in Ho Chi Minh City. I build web systems
         end to end, and I work with AI-assisted engineering daily. My bias: small surfaces,
         clear boundaries, and code that explains itself.</p>
     </section>
@@ -99,11 +119,16 @@
           <span class="row-num">03</span>
           <div class="row-main">
             <h3>AI-Assisted Engineering</h3>
-            <p>A daily working method, not a claim: orchestrating Claude Code and Codex —
-              multi-agent pipelines that plan, build, test, and document, with human review
-              at every gate.</p>
+            <p>Alongside using Orca + OMP + orchestration daily, I am developing
+              <strong>Laplace Demon</strong> — a Python agent runtime with OpenAI-compatible
+              providers, validated tool boundaries, bounded context and session memory, a
+              Telegram runtime, and per-user turn guards. The goal is inspectable execution,
+              not a chatbot that only returns text.</p>
           </div>
-          <p class="row-src"><span class="row-note">Working method, in daily use</span></p>
+          <p class="row-src">
+            <span class="row-note">Agent runtime in development</span>
+            <a href="https://github.com/tothanhnguyen/Laplace-Demon--Ai-Agent" target="_blank" rel="noopener">GitHub ↗</a>
+          </p>
         </li>
         <li class="row">
           <span class="row-num">04</span>
@@ -133,11 +158,11 @@
           <span class="row-when">Jan — Jun 2026</span>
           <div class="row-main">
             <h3>Chat Server Microservices</h3>
-            <p>4-member academic team — shared contracts, file service, audit pipeline.</p>
+            <p>4-member academic team — shared contracts, file service, audit pipeline, and UI/UX.</p>
           </div>
         </li>
         <li class="row">
-          <span class="row-when">Jul 2026 — present</span>
+          <span class="row-when">July 2026 — Sep 2026</span>
           <div class="row-main">
             <h3>MowStudio</h3>
             <p>Personal, end-to-end — booking infrastructure for creative studios.</p>

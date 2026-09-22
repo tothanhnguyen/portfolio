@@ -11,13 +11,49 @@
     else if (mqlReduce.addListener) mqlReduce.addListener(fn);
   }
 
+  /* ============ opening curtain (home) ============
+     The inline body script injects the ink panel and `html.curtain-active`,
+     which pauses every hero entrance animation at its first frame
+     (hero.css). We lift it on a fixed clock: the class comes off as the
+     panel starts rising, so the hero entrance plays through the lift,
+     then the panel leaves the DOM. The inline script's own 2.6s timeout
+     clears everything if this file never runs. */
+  var liftCurtain = null;
+  var curtainEl = document.querySelector(".curtain");
+  if (curtainEl && root.classList.contains("curtain-active")) {
+    var curtainLifted = false;
+    liftCurtain = function () {
+      if (curtainLifted) return;
+      curtainLifted = true;
+      root.classList.remove("curtain-active");
+      curtainEl.classList.add("lift");
+      setTimeout(function () {
+        if (curtainEl.parentNode) curtainEl.parentNode.removeChild(curtainEl);
+      }, 850);
+    };
+    setTimeout(liftCurtain, Math.max(0, 620 - performance.now()));
+  }
+
   /* ============ reveal on scroll (progressive enhancement) ============
      Default state in CSS/HTML: visible. The head inline script adds .js;
      the controller adds .reveal-ready to <html> only after successful
      initialization — the CSS hidden state keys on both, so a failed load
      or a thrown error leaves every [data-reveal] readable. */
   var revealEls = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  var groupEls = Array.prototype.slice.call(document.querySelectorAll("[data-reveal-group]"));
   var revealIO = null;
+
+  /* Set each group's child index once; the shared reveal observer below
+     applies visibility per row, while CSS uses --i for the stagger delay. */
+  groupEls.forEach(function (group) {
+    var kids = [];
+    for (var i = 0; i < group.children.length; i++) {
+      if (group.children[i].hasAttribute("data-reveal")) kids.push(group.children[i]);
+    }
+    kids.forEach(function (kid, i) {
+      kid.style.setProperty("--i", String(Math.min(i, 5)));
+    });
+  });
 
   function showAllReveals() {
     revealEls.forEach(function (el) { el.classList.add("is-visible"); });
@@ -27,10 +63,10 @@
     if (!("IntersectionObserver" in window) || mqlReduce.matches) { showAllReveals(); return; }
     revealIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealIO.unobserve(entry.target);
-        }
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        el.classList.add("is-visible");
+        revealIO.unobserve(el);
       });
     }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
     revealEls.forEach(function (el) { revealIO.observe(el); });
@@ -43,6 +79,7 @@
     if (e.matches) { // user switched to reduce mid-session
       if (revealIO) { revealIO.disconnect(); revealIO = null; }
       showAllReveals();
+      if (liftCurtain) liftCurtain();
     }
   });
 

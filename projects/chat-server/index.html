@@ -8,15 +8,15 @@
   <meta name="description" content="Chat Server Microservices — a Discord-inspired real-time messaging platform: 12 services, gRPC contracts, RabbitMQ events, database-per-service MySQL.">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Chat Server Microservices — Case Study">
-  <meta property="og:description" content="Real-time messaging as a distributed system — shared contracts, file service, event-driven audit logging.">
+  <meta property="og:description" content="Real-time messaging as a distributed system — shared contracts, file service, event-driven audit logging, and desktop UI/UX.">
   <meta property="og:image" content="/assets/pose-cutout.png">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js")</script>
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/project.css">
+  <link rel="stylesheet" href="/css/base.css?v=260921-motion-font500">
+  <link rel="stylesheet" href="/css/project.css?v=260921-motion">
 </head>
 <body>
 
@@ -41,7 +41,7 @@
         <p class="case-premise" data-reveal>Real-time messaging as a distributed system —
           twelve services, one shared contract layer.</p>
         <dl class="case-meta" data-reveal>
-          <div><dt>Role</dt><dd>Shared contracts · file service · audit pipeline</dd></div>
+          <div><dt>Role</dt><dd>Shared contracts · file service · audit pipeline · UI/UX</dd></div>
           <div><dt>Period</dt><dd>Jan — Jun 2026</dd></div>
           <div><dt>Stack</dt><dd>Java 17 · Spring Boot 3 · Spring Cloud Gateway · gRPC · RabbitMQ · MySQL · MinIO · Keycloak</dd></div>
           <div><dt>Shape</dt><dd>12 microservices · 15 Maven modules · Swing desktop client</dd></div>
@@ -97,7 +97,8 @@
           <strong>grpc-contracts</strong> module (proto definitions and generated gRPC
           stubs every service imports), and the <strong>file service</strong> with MinIO
           storage and automatic thumbnails — plus the event-driven audit logging pipeline
-          over RabbitMQ and Loki.</p>
+          over RabbitMQ and Loki. I also contributed to the <strong>Swing desktop client UI/UX</strong>,
+          including its 3-column layout and light/dark modes.</p>
       </section>
 
       <section class="case-sec section">

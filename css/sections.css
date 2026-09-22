@@ -161,3 +161,53 @@
   .cap-row { grid-template-columns: 1fr; gap: .7rem; }
   .cap-desc { max-width: none; }
 }
+
+/* ============ entrance choreography (js-gated) ============
+   Titles rise from a static mask; supporting meta fades in behind them.
+   Initial states live under .js.reveal-ready + the row's .is-visible,
+   so no-JS and reduced-motion (which force .is-visible) show content. */
+
+/* masked titles — padding/negative margin compensates descender clipping */
+.js.reveal-ready .section-title,
+.js.reveal-ready .project-name,
+.js.reveal-ready .cap-name,
+.js.reveal-ready .teaser-intro,
+.js.reveal-ready .talk {
+  overflow: hidden;
+  padding-bottom: .14em;
+  margin-bottom: -.14em;
+}
+/* these reveal by inner motion only — cancel the base block translate */
+.js.reveal-ready .section-title[data-reveal],
+.js.reveal-ready .teaser-intro[data-reveal],
+.js.reveal-ready .talk[data-reveal] { transform: none; }
+
+.js.reveal-ready .section-title > span,
+.js.reveal-ready .teaser-intro > span,
+.js.reveal-ready .talk > span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform .85s var(--ease);
+}
+.js.reveal-ready .project-name a,
+.js.reveal-ready .cap-name a {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform .85s var(--ease), color .3s;
+}
+.js.reveal-ready .section-title.is-visible > span,
+.js.reveal-ready .teaser-intro.is-visible > span,
+.js.reveal-ready .talk.is-visible > span,
+.js.reveal-ready .project-row.is-visible .project-name a,
+.js.reveal-ready .cap-row.is-visible .cap-name a { transform: none; }
+
+/* supporting meta follows the title */
+.js.reveal-ready .project-row :is(.project-num, .project-meta, .project-premise, .project-team, .project-stack, .project-cta),
+.js.reveal-ready .cap-row :is(.cap-num, .cap-desc),
+.js.reveal-ready .stack-list li :is(.stack-index, small) {
+  opacity: 0;
+  transition: opacity .55s var(--ease) .16s, color .3s, border-color .3s;
+}
+.js.reveal-ready .project-row.is-visible :is(.project-num, .project-meta, .project-premise, .project-team, .project-stack, .project-cta),
+.js.reveal-ready .cap-row.is-visible :is(.cap-num, .cap-desc),
+.js.reveal-ready .stack-list li.is-visible :is(.stack-index, small) { opacity: 1; }

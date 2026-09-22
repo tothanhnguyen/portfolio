@@ -265,3 +265,13 @@
     height: min(72svh, 72vw, 650px);
   }
 }
+
+/* ============ opening curtain gate ============
+   While the curtain covers the page, hold every hero entrance animation
+   at its first frame. effects.js removes html.curtain as the panel
+   starts lifting, releasing the entrance to play through the reveal. */
+html.curtain-active .hero *,
+html.curtain-active .hero *::before,
+html.curtain-active .hero *::after {
+  animation-play-state: paused !important;
+}

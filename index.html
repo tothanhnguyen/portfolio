@@ -13,15 +13,39 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Great+Vibes&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js")</script>
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/hero.css">
-  <link rel="stylesheet" href="/css/sections.css">
+  <link rel="stylesheet" href="/css/base.css?v=260921-motion-font500">
+  <link rel="stylesheet" href="/css/hero.css?v=260921-motion">
+  <link rel="stylesheet" href="/css/sections.css?v=260921-motion">
 </head>
 <body>
 
   <a class="skip-link" href="#main">Skip to content</a>
+  <!-- Opening curtain: injected here (never in static CSS/HTML) so no-JS,
+       reduced motion and repeat visits never see it. effects.js lifts it
+       and the hero entrance plays through; a 2.6s safety timeout clears
+       everything if effects.js fails to load. -->
+  <script>
+  (function () {
+    try {
+      if (sessionStorage.getItem("tnIntroSeen")) return;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var root = document.documentElement;
+      root.classList.add("curtain-active");
+      var panel = document.createElement("div");
+      panel.className = "curtain";
+      panel.setAttribute("aria-hidden", "true");
+      panel.innerHTML = '<span class="curtain-mark">T’NGUYEN</span><span class="curtain-sig" lang="vi">Thành Nguyên</span>';
+      document.body.appendChild(panel);
+      sessionStorage.setItem("tnIntroSeen", "1");
+      setTimeout(function () {
+        root.classList.remove("curtain-active");
+        if (panel.parentNode) panel.parentNode.removeChild(panel);
+      }, 2600);
+    } catch (e) { /* private mode / ancient browser: no curtain */ }
+  })();
+  </script>
 
   <!-- ============ HERO (identity preserved) ============ -->
   <header class="hero" id="top">
@@ -91,14 +115,14 @@
 
     <!-- ============ SELECTED WORK ============ -->
     <section class="work section" id="projects">
-      <h2 class="section-title" data-reveal>Selected Work</h2>
+      <h2 class="section-title" data-reveal><span>Selected Work</span></h2>
 
-      <div class="work-list">
+      <div class="work-list" data-reveal-group>
         <article class="project-row" data-reveal>
           <div class="project-id">
             <span class="project-num">01</span>
             <h3 class="project-name"><a href="/projects/mowstudio/">MowStudio</a></h3>
-            <p class="project-meta">Personal project · 2026</p>
+            <p class="project-meta">Personal project · July 2026 — Sep 2026</p>
           </div>
           <div class="project-info">
             <p class="project-premise">Booking infrastructure for creative studios.</p>
@@ -115,7 +139,7 @@
           </div>
           <div class="project-info">
             <p class="project-premise">Real-time messaging across distributed services.</p>
-            <p class="project-team">4-member team — I built the shared gRPC contracts and the file service.</p>
+            <p class="project-team">4-member team — I built the shared gRPC contracts, the file service, and contributed to the desktop UI/UX.</p>
             <p class="project-stack">Java · Spring Boot · gRPC · RabbitMQ</p>
             <a class="project-cta" href="/projects/chat-server/">View project <span aria-hidden="true">→</span></a>
           </div>
@@ -127,7 +151,7 @@
     <section class="capabilities section" id="focus">
       <p class="kicker" data-reveal>( capabilities )</p>
       <h2 class="section-sub" data-reveal>Capabilities</h2>
-      <ol class="cap-list">
+      <ol class="cap-list" data-reveal-group>
         <li class="cap-row" data-reveal>
           <span class="cap-num">01</span>
           <h3 class="cap-name"><a href="/projects/mowstudio/">Web Systems</a></h3>
@@ -150,7 +174,7 @@
     <section class="stack-section section" id="stack">
       <p class="kicker" data-reveal>( stack )</p>
       <h2 class="section-sub" data-reveal>Stack</h2>
-      <ul class="stack-list">
+      <ul class="stack-list" data-reveal-group>
         <li data-reveal>
           <span class="stack-name">Java</span>
           <span class="stack-index">01</span>
@@ -177,16 +201,16 @@
     <!-- ============ ABOUT TEASER — short intro ============ -->
     <section class="teaser section" id="about">
       <p class="kicker" data-reveal>( about )</p>
-      <h2 class="teaser-intro" data-reveal>Software engineering student at UIT,
-        building web systems and exploring AI-assisted development.</h2>
+      <h2 class="teaser-intro" data-reveal><span>Software engineering student at UIT,
+        building web systems and exploring AI-assisted development.</span></h2>
       <a class="teaser-cta" data-reveal href="/about/">More about me <span aria-hidden="true">→</span></a>
     </section>
 
     <!-- ============ CONTACT ============ -->
     <section class="contact-section section" id="contact">
       <p class="kicker" data-reveal>( contact )</p>
-      <h2 class="talk" data-reveal>Let’s<span class="script-inline">talk</span></h2>
-      <div class="contact-wrap">
+      <h2 class="talk" data-reveal><span>Let’s<span class="script-inline">talk</span></span></h2>
+      <div class="contact-wrap" data-reveal-group>
         <a class="contact-primary" data-reveal href="mailto:tothanhnguyen2006@gmail.com">tothanhnguyen2006@gmail.com</a>
         <div class="contact-secondary" data-reveal>
           <a href="https://github.com/tothanhnguyen" target="_blank" rel="noopener">GitHub ↗</a>

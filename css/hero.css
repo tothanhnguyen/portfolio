@@ -65,6 +65,7 @@
 /* no z-index here: the h1 must NOT create a stacking context, so the
    .outline-word child (z-4) can layer above the person image (z-3) */
 .wordmark {
+  font-family: "Bodoni Moda", "Didot", "Playfair Display", serif;
   position: relative;
   width: fit-content;
   margin-inline: auto;
@@ -100,6 +101,14 @@
   filter: drop-shadow(0 30px 60px rgba(0,0,0,.25));
   animation: person-in 1.3s .35s both;
 }
+@media (min-width: 1025px) {
+  .person {
+    width: auto;
+    height: min(92vh, 840px);
+    height: min(92svh, 840px);
+    bottom: 3vh;
+  }
+}
 
 /* exact 1:1 copy of the solid word, layered ABOVE the person (z-4 > z-3)
    and masked by the person cutout: the stroked letters only appear where
@@ -121,6 +130,12 @@
   -webkit-mask: url("../assets/pose-cutout.webp") no-repeat 0 0 / 0 0;
   mask: url("../assets/pose-cutout.webp") no-repeat 0 0 / 0 0;
   animation: fade-in 1.6s 1s both;
+}
+@media (min-width: 1025px) {
+  .outline-word {
+    -webkit-mask-image: url("../assets/pose-cutout-hero.webp?v=hero-crop-1");
+    mask-image: url("../assets/pose-cutout-hero.webp?v=hero-crop-1");
+  }
 }
 /* letters as inline-blocks to mirror the solid .ltr spans, so kerning and
    advance widths lay out identically in both layers */

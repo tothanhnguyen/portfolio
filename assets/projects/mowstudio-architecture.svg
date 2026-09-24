@@ -15,11 +15,11 @@
       <path d="M0,0 L12,6 L0,12" fill="none" stroke="#3a3a3a" stroke-width="1.4"/>
     </marker>
     <style>
-      .title { font: 600 42px "Bodoni Moda", Didot, "Playfair Display", serif; fill: #101010; }
+      .title { font: 600 42px "Source Serif 4", Georgia, "Times New Roman", serif; fill: #101010; }
       .subtitle { font: 500 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #3a3a3a; letter-spacing: .03em; }
       .section { font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #a33122; letter-spacing: .18em; }
-      .label { font: 600 22px "Bodoni Moda", Didot, "Playfair Display", serif; fill: #101010; }
-      .body { font: 500 16px "Bodoni Moda", Didot, "Playfair Display", serif; fill: #3a3a3a; }
+      .label { font: 600 22px "Source Serif 4", Georgia, "Times New Roman", serif; fill: #101010; }
+      .body { font: 500 16px "Source Serif 4", Georgia, "Times New Roman", serif; fill: #3a3a3a; }
       .small { font: 500 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #3a3a3a; }
       .pill { font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #101010; letter-spacing: .04em; }
       .box { fill: #cfceca; stroke: #101010; stroke-width: 1.5; }

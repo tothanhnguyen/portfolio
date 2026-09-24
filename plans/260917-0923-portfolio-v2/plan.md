@@ -33,7 +33,7 @@ Không mở rộng sang CMS, contact form/backend, cursor tùy biến, SPA navig
 
 | Hiện trạng | Bằng chứng | Hệ quả cho V2 |
 |---|---|---|
-| Token nhận diện rõ | `css/base.css:2–10`: #d8d7d4, #cfceca, #101010, #3a3a3a, #a33122; Bodoni Moda / Great Vibes / Noto Serif JP | Dùng tiếp, không đổi palette/font để tạo cảm giác mới |
+| Token nhận diện rõ | `css/base.css:2–10`: #d8d7d4, #cfceca, #101010, #3a3a3a, #a33122; Source Serif 4 / Great Vibes / Noto Serif JP | Dùng tiếp, không đổi palette/font để tạo cảm giác mới |
 | Hero có mask đúng ngôn ngữ thiết kế | `css/hero.css:54–116`, `js/effects.js:23–46` | Không tạo stacking context mới trên wordmark; bảo toàn đồng bộ portrait/outline |
 | Responsive đã được chủ động xử lý | Hero ≤760px, landscape riêng, tablet 761–1024px; section ≤860px | Giữ breakpoint có lý do, không đồng loạt thay bằng bộ breakpoint mới |
 | Selected Work có 2 project, chỉ text | `index.html:95–123` | Thiết kế 2 chapter đủ mạnh; không bịa project thứ ba |

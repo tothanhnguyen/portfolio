@@ -92,6 +92,7 @@
   if (hero) (function () {
     var person = hero.querySelector(".person");
     var outline = hero.querySelector(".outline-word");
+    var wordmark = hero.querySelector(".wordmark");
     var finePointer = window.matchMedia("(pointer: fine)").matches;
 
     // parse depth coefficients once, not per frame
@@ -175,7 +176,12 @@
       layers.forEach(function (layer) {
         var x = -curX * layer.depth * 34;
         var y = -curY * layer.depth * 22 + drift * layer.scroll;
-        layer.el.style.translate = x + "px " + y + "px";
+        if (layer.el === wordmark) {
+          layer.el.style.setProperty("--wordmark-x", x + "px");
+          layer.el.style.setProperty("--wordmark-y", y + "px");
+        } else {
+          layer.el.style.translate = x + "px " + y + "px";
+        }
       });
       hero.style.opacity = Math.max(0, 1 - (drift / heroH) * 2.6);
       syncMask();
@@ -236,7 +242,14 @@
       if (!motionOK) {
         stopEntrance();
         if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-        layers.forEach(function (layer) { layer.el.style.translate = ""; });
+        layers.forEach(function (layer) {
+          if (layer.el === wordmark) {
+            layer.el.style.removeProperty("--wordmark-x");
+            layer.el.style.removeProperty("--wordmark-y");
+          } else {
+            layer.el.style.translate = "";
+          }
+        });
         hero.style.opacity = "";
         curX = curY = mx = my = drift = 0;
         syncMask();

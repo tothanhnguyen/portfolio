@@ -1,11 +1,19 @@
 /* ============ tokens & reset ============ */
+@font-face {
+  font-family: "Rethena";
+  src: url("/assets/fonts/rethena-demo.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --bg: #d8d7d4;
   --bg-soft: #cfceca;
   --ink: #101010;
   --ink-soft: #3a3a3a;
   --red: #a33122;
-  --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --serif: "Rethena", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --script: "Great Vibes", cursive;
   --jp: "Noto Serif JP", serif;
 
